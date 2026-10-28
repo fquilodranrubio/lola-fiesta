@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Misterio en casa de Lola</title>
+<meta name="theme-color" content="#14111c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Limelight&display=swap">
+<style>
+:root{color-scheme:dark;
+--bg:#14111c;--sf:#1e1929;--sf2:#2a2338;--line:#3b3250;--tx:#f3eee6;--mu:#aaa2b9;--ac:#e0a93b;--acink:#1b1406;--hot:#e5568a;--hotink:#2a0c18;--ok:#3dbe8b;--bad:#ef6b6b;
+--c-hitster:#4a90e8;--c-justone:#2fbf8a;--c-basta:#e8ae1f;--c-resistencia:#e8703a;--c-dibujo:#e87ba4;--c-tesoro:#9a8fee;--c-extras:#5cc46a;--c-disfraz:#e5568a;--c-otro:#d9d4e6;
+--f-disp:'Limelight',Georgia,serif;--f-body:'Figtree',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx)}
+body{font:400 15px/1.5 var(--f-body);padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+body.tvmode{padding:0;overflow:hidden;height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+[hidden]{display:none!important}
+.mu{color:var(--mu)}.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.ic{width:1em;height:1em;vertical-align:-.14em;flex:none}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.app{max-width:520px;margin:0 auto;display:grid;gap:14px;padding-top:14px}
+.adm{max-width:760px}
+.top{display:flex;align-items:center;gap:12px;padding:6px 0 4px}
+.brand{font:400 22px/1.05 var(--f-disp);color:var(--ac)}
+.brand small{display:block;font:500 11px var(--f-body);color:var(--mu);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.who{margin-left:auto;display:flex;align-items:center;gap:10px;text-align:right}
+.who b{display:block;line-height:1.15}.who small{color:var(--mu)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--hot);color:var(--hotink);display:grid;place-items:center;font:400 18px var(--f-disp);flex:none}
+.tabs{display:flex;gap:2px;background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:3px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;overflow-x:auto}
+.tabs button{flex:1;background:none;border:0;padding:9px 8px;border-radius:9px;color:var(--mu);cursor:pointer;font-weight:500;font-size:13px;white-space:nowrap}
+.tabs button.on{background:var(--ac);color:var(--acink)}
+.card{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.card.hl{border-color:var(--ac)}
+.card h3{font:500 12px var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--mu)}
+.card h2{font:400 24px/1.15 var(--f-disp);color:var(--ac)}
+.big{font:400 52px/1 var(--f-disp);color:var(--ac)}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sp{margin-left:auto}
+.btn{background:var(--ac);color:var(--acink);border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;min-height:42px}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:none;color:var(--tx);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--ac)}
+.btn.hot{background:var(--hot);color:var(--hotink)}
+.btn.bad{background:none;border:1px solid var(--bad);color:var(--bad)}
+.btn.sm{padding:6px 10px;font-size:13px;min-height:34px}
+.btn.full{width:100%}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.badge{display:inline-block;font:500 11px var(--f-mono);padding:2px 8px;border-radius:999px;background:var(--sf2);border:1px solid var(--line);color:var(--mu);white-space:nowrap}
+.badge.ac{color:var(--ac);border-color:var(--ac)}.badge.ok{color:var(--ok);border-color:var(--ok)}.badge.bad{color:var(--bad);border-color:var(--bad)}.badge.hot{color:var(--hot);border-color:var(--hot)}
+.alertb{background:var(--hot);color:var(--hotink);border-radius:14px;padding:12px 14px;font-weight:700;display:flex;gap:10px;align-items:center}
+.alertb span{font-weight:400}
+.fld{display:grid;gap:4px}.fld label{font-size:13px;color:var(--mu)}
+input[type=text],input[type=password],input[type=number],input[type=tel],input[type=datetime-local],select,textarea{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-height:42px}
+input:focus,select:focus,textarea:focus{border-color:var(--ac);outline:0}
+.err{color:var(--bad);font-size:14px}.okt{color:var(--ok);font-size:14px}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px}
+.chk input{accent-color:var(--ac);width:18px;height:18px}
+.list{display:grid}
+.li{display:flex;align-items:flex-start;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.li:first-child{border-top:0}
+.li .t{font:500 13px var(--f-mono);min-width:46px;color:var(--mu);padding-top:1px}
+.li.now .t,.li.now b{color:var(--ac)}
+.li.done{opacity:.55}
+.li.skip b{text-decoration:line-through}
+.pick{display:flex;width:100%;text-align:left;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;min-height:48px}
+.pick.on{border-color:var(--ac);background:#2b2212}
+.pick small{color:var(--mu);display:block;line-height:1.2}
+details{border-top:1px solid var(--line);padding:10px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:500;display:flex;gap:8px;align-items:center;list-style:none}
+summary::-webkit-details-marker{display:none}
+details p{color:var(--mu);margin-top:6px;font-size:14px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.legend span{display:flex;align-items:center;gap:5px}
+.brow{display:grid;grid-template-columns:22px minmax(70px,120px) 1fr 34px;align-items:center;gap:8px;min-height:var(--rh,34px)}
+.brow .rk{font:500 12px var(--f-mono);color:var(--mu);text-align:right}
+.brow .bn{font-weight:500;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brow .bn small{display:block;font-weight:400;font-size:11px;color:var(--mu);overflow:hidden;text-overflow:ellipsis}
+.bbar{display:flex;height:18px;background:var(--sf2);border-radius:4px;overflow:hidden}
+.bbar i{display:block;height:100%;margin-right:2px;border-radius:2px}
+.bbar.seal{background:repeating-linear-gradient(135deg,var(--sf2) 0 8px,var(--sf) 8px 16px)}
+.bt{font:500 16px var(--f-mono);text-align:right}
+.brow.me .bn{color:var(--ac)}
+.brow.win .bn,.brow.win .bt{color:var(--ac)}
+.sel{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--sf2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--tx);min-height:34px}
+.chip.on{background:var(--ac);color:var(--acink);border-color:var(--ac)}
+.chip.off{opacity:.5}
+.tbl{display:grid}
+.tr{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.tr:first-child{border-top:0}
+.tr small{color:var(--mu);display:block;line-height:1.3}
+.x{background:none;border:0;color:var(--mu);cursor:pointer;font-size:13px;padding:4px 8px;text-decoration:underline}
+.x:hover{color:var(--bad)}
+.grp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grp h4{margin:0 0 4px;font:400 17px var(--f-disp);color:var(--ac)}
+.grp div{font-size:14px}
+.secret{font:400 40px/1.1 var(--f-disp);color:var(--hot);text-align:center;padding:10px 0}
+.clue{background:var(--sf2);border-radius:10px;padding:10px 12px;font-size:15px}
+.clue small{display:block;color:var(--mu);font-size:12px;margin-bottom:2px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ac);color:var(--acink);font-weight:700;padding:11px 16px;border-radius:12px;z-index:50;max-width:90vw;text-align:center}
+#toast.bad{background:var(--bad);color:#2a0808}
+.modal{position:fixed;inset:0;background:rgba(10,8,16,.86);z-index:40;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-left,0px))}
+.modal .card{max-width:440px;width:100%}
+.adm-nav{display:flex;flex-wrap:wrap;gap:6px}
+.kbd{font:500 13px var(--f-mono);background:var(--sf2);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.note{font-size:12px;color:var(--mu);text-align:center}
+/* TV */
+.tvwrap{position:fixed;inset:0;background:#0e0b15}
+.tvstage{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;display:flex;flex-direction:column;overflow:hidden}
+.tvh{height:76px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--line)}
+.tvlogo{font:400 32px var(--f-disp);color:var(--ac)}
+.tvclk{font:500 40px var(--f-mono)}
+.tvmeta{font-size:18px;color:var(--mu);text-align:right}
+.tvm{flex:1;min-height:0;display:grid;grid-template-columns:1fr 400px;gap:36px;padding:18px 40px 14px}
+.tvl{min-height:0;display:flex;flex-direction:column;gap:8px}
+.tvl h2{font:500 15px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
+.tvr{display:flex;flex-direction:column;gap:14px;min-height:0}
+.tvc{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:grid;gap:4px}
+.tvc h3{font:500 13px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
+.tvc .v{font:400 28px/1.15 var(--f-disp);color:var(--ac)}
+.tvc p{font-size:17px}
+.tvstage .brow{grid-template-columns:34px 230px 1fr 60px;gap:16px}
+.tvstage .brow .bn{font-size:22px}.tvstage .brow .bn small{font-size:13px}
+.tvstage .bbar{height:24px}.tvstage .bt{font-size:28px}.tvstage .brow .rk{font-size:18px}
+.tvstage .legend{font-size:14px}
+.tvstrip{flex:none;height:40px;background:var(--hot);color:var(--hotink);font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;gap:10px}
+.tvov{position:absolute;inset:0;background:rgba(14,11,21,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;z-index:5}
+.tvov .h{font:400 84px/1 var(--f-disp);color:var(--ac)}
+.tvov .s{font-size:30px}
+.tvov .n{font:500 120px/1 var(--f-mono);color:var(--hot)}
+.podium{display:flex;align-items:flex-end;gap:28px;margin-top:10px}
+.podium div{display:grid;gap:8px;justify-items:center;width:240px}
+.podium b{font:400 34px/1.1 var(--f-disp);color:var(--tx)}
+.podium small{font-size:18px;color:var(--mu)}
+.podium i{display:block;width:100%;border-radius:10px 10px 0 0;background:var(--sf2);border:1px solid var(--line);font:400 54px/1 var(--f-disp);color:var(--ac);padding-top:14px;font-style:normal}
+.tvcf{position:absolute;inset:0;pointer-events:none;z-index:6}
+.pop{animation:pop .55s ease-out both}
+@keyframes pop{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+.hid{visibility:hidden}
+@media(prefers-reduced-motion:reduce){.pop{animation:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="modal" class="modal" hidden></div>
+<div id="toast" hidden></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script>
+const SUPA_URL='https://ovnfhptjsgartpabvsoi.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92bmZocHRqc2dhcnRwYWJ2c29pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxNTU4MTgsImV4cCI6MjEwODczMTgxOH0.UR02X14GuCdz6PWBusKAT1xTc10HVZga4VaawG3lm0A';
+const sb=supabase.createClient(SUPA_URL,SUPA_KEY,{auth:{persistSession:false}});
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TZ='America/Santiago';
+const hm=d=>new Date(d).toLocaleTimeString('es-CL',{timeZone:TZ,hour:'2-digit',minute:'2-digit',hour12:false});
+const ICO={lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l3 3"/>',bolt:'<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>',qr:'<rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/>'};
+const ic=n=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[n]}</svg>`;
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const sstore={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
+const CATS=[['hitster','Hitster'],['justone','Just One'],['basta','Basta'],['resistencia','Resistencia'],['dibujo','Dibujo'],['tesoro','Tesoro'],['extras','Extras'],['disfraz','Disfraz']];
+const catName=k=>(CATS.find(c=>c[0]===k)||[k,k])[1];
+const catColor=k=>`var(--c-${CATS.some(c=>c[0]===k)?k:'otro'})`;
+const ERR={pin_incorrecto:'El PIN no coincide.',registro_cerrado:'El registro está cerrado. Habla con Fernando.',nombre_invalido:'Escribe un nombre de hasta 24 letras.',pin_invalido:'El PIN son 4 números.',nombre_existe:'Ese nombre ya está registrado. Usa "Ya me registré".',no_existe:'No encontramos ese nombre.',votacion_cerrada:'La votación ya se cerró.',no_puedes_votarte:'No puedes votar por ti.',candidato_invalido:'No puedes votar por esa persona.',no_permitido:'No puedes hacer esto.',admin_pin_incorrecto:'PIN de árbitro incorrecto.',admin_bloqueado:'Demasiados intentos. Espera 10 minutos.',hay_votacion_abierta:'Primero cierra la votación abierta.',sin_descriptor_o_personaje:'No quedan descriptores o personajes disponibles.',confirmacion_incorrecta:'Escribe exactamente EMPEZAR DE NUEVO.'};
+const errMsg=e=>{const m=(e&&(e.message||e.msg))||String(e);const k=Object.keys(ERR).find(k=>m.includes(k));return k?ERR[k]:'Algo falló. Revisa la conexión e inténtalo de nuevo.'};
+function toast(t,bad){const e=$('#toast');e.textContent=t;e.className=bad?'bad':'';e.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>e.hidden=true,3200)}
+async function rpc(fn,args){const {data,error}=await sb.rpc(fn,args);if(error)throw error;return data}
+
+const params=new URLSearchParams(location.search);
+const VIEW=params.get('v')==='tv'?'tv':params.get('v')==='admin'?'admin':'guest';
+const QR_TOKEN=params.get('qr');
+if(QR_TOKEN)store.set('pendingQR',QR_TOKEN);
+if(params.has('qr')){try{history.replaceState(null,'',location.pathname+(VIEW!=='guest'?'?v='+VIEW:''))}catch(e){}}
+
+/* ---------- Datos ---------- */
+const D={state:null,guests:[],agenda:[],asg:[],log:[],rounds:[],qrs:[],finds:[],att:[],loaded:false};
+async function load(){
+  const q=t=>sb.from(t).select('*');
+  const [st,gu,ag,as,lg,vr,qr,fi,at]=await Promise.all([q('state').eq('id',1).single(),q('guests'),q('agenda').order('ord'),q('assignments').eq('active',true),q('score_log').eq('void',false).order('id'),q('vote_rounds').order('id'),q('qr_codes').order('num'),q('qr_finds'),q('caja_attempts')]);
+  for(const r of [st,gu,ag,as,lg,vr,qr,fi,at])if(r.error)throw r.error;
+  D.state=st.data;
+  D.guests=gu.data.filter(g=>g.run===D.state.run&&!g.removed).sort((a,b)=>a.name.localeCompare(b.name));
+  const ids=new Set(D.guests.map(g=>g.id));
+  D.agenda=ag.data;D.asg=as.data.filter(a=>ids.has(a.guest_id));D.log=lg.data.filter(l=>ids.has(l.guest_id));
+  const rs=+new Date(D.state.run_started_at||0);
+  D.rounds=vr.data.filter(r=>+new Date(r.created_at)>=rs);
+  D.qrs=qr.data;D.finds=fi.data.filter(f=>ids.has(f.guest_id));D.att=at.data.filter(a=>ids.has(a.guest_id));
+  D.loaded=true;
+}
+let rT=null;
+function schedule(){clearTimeout(rT);rT=setTimeout(refresh,250)}
+async function refresh(){try{await load();await afterLoad();render()}catch(e){console.error(e);if(!D.loaded)$('#root').innerHTML=`<div class="app"><div class="card"><h2>Sin conexión</h2><p class="mu">No pudimos cargar la fiesta. Revisa tu internet y recarga la página.</p></div></div>`}}
+function subscribe(){
+  const ch=sb.channel('fiesta');
+  ['state','guests','agenda','assignments','score_log','vote_rounds','qr_codes','qr_finds','caja_attempts'].forEach(t=>ch.on('postgres_changes',{event:'*',schema:'public',table:t},schedule));
+  ch.subscribe();
+  setInterval(refresh,20000);
+  setInterval(()=>tick(),1000);
+}
+const players=()=>D.guests.filter(g=>g.role==='jugador'&&g.status==='activo');
+const gname=id=>{const g=D.guests.find(x=>x.id===id);return g?g.name:'?'};
+function totals(){
+  const m={};D.guests.forEach(g=>m[g.id]={g,t:0,b:{}});
+  D.log.forEach(l=>{const x=m[l.guest_id];if(!x)return;x.t+=l.pts;x.b[l.cat]=(x.b[l.cat]||0)+l.pts});
+  return m;
+}
+function ranking(){
+  const m=totals();const arr=Object.values(m).filter(x=>x.g.role==='jugador').sort((a,b)=>b.t-a.t||a.g.name.localeCompare(b.g.name));
+  let r=0,p=null;arr.forEach((x,i)=>{if(x.t!==p){r=i+1;p=x.t}x.r=r});return arr;
+}
+const evStart=()=>new Date(D.state.event_start);
+const agTime=a=>new Date(+evStart()+a.start_min*60000);
+function curAgenda(){
+  if(!D.agenda.length)return null;
+  if(D.state.current_agenda){const a=D.agenda.find(x=>x.id===D.state.current_agenda);if(a)return a}
+  const now=Date.now();let cur=null;
+  D.agenda.forEach(a=>{if(a.status!=='saltado'&&+agTime(a)<=now)cur=a});
+  return cur;
+}
+function nextAgenda(cur){const i=cur?D.agenda.indexOf(cur):-1;return D.agenda.slice(i+1).find(a=>a.status!=='saltado')||null}
+const sealed=()=>D.state.votes_revealed&&!D.state.final_revealed;
+const activeFlash=()=>D.qrs.filter(q=>q.kind==='rel'&&q.active_from&&Date.now()<+new Date(q.active_until));
+function myMesa(gid){
+  const cur=curAgenda();if(!cur)return null;
+  const k=cur.kind;
+  if(k==='hitster'){const a=D.asg.find(x=>x.block==='hitster'&&x.guest_id===gid);if(!a)return{t:'Hitster Bingo',s:'Aún sin pareja. Fernando la asigna.'};const mates=D.asg.filter(x=>x.block==='hitster'&&x.team===a.team&&x.guest_id!==gid).map(x=>gname(x.guest_id));return{t:'Hitster Bingo',s:`${a.team}${mates.length?' con '+mates.join(' y '):''} · Living`}}
+  if(k==='rondaA'||k==='rondaB'){const a=D.asg.find(x=>x.block===k&&x.guest_id===gid);if(!a)return{t:cur.title,s:'Aún sin mesa. Fernando te asigna.'};const n=D.asg.filter(x=>x.block===k&&x.game===a.game).length;return{t:a.game,s:`${a.zone} · ${n} jugadores`}}
+  if(k==='resistencia')return{t:'La Resistencia',s:'Todos juntos en el living'};
+  if(k==='dibujo')return{t:'Dibujo a ciegas',s:'Todos en el living, con papel y lápiz'};
+  if(k==='desfile')return{t:'Desfile por la barra',s:'Living'};
+  return{t:cur.title,s:cur.place};
+}
+function board(rk,mine,mx,winTop){
+  return rk.map(x=>`<div class="brow ${x.g.id===mine?'me':''} ${winTop&&x.r===1?'win':''}"><span class="rk">${x.r}</span><span class="bn">${esc(x.g.name)}<small>${esc(x.g.costume)}</small></span><span class="bbar">${CATS.map(c=>x.b[c[0]]>0?`<i style="width:${x.b[c[0]]/mx*100}%;background:${catColor(c[0])}" title="${c[1]}: ${x.b[c[0]]}"></i>`:'').join('')}</span><b class="bt">${x.t}</b></div>`).join('');
+}
+const mxOf=rk=>Math.max(10,...rk.map(x=>Object.values(x.b).filter(v=>v>0).reduce((a,b)=>a+b,0)))*1.05;
+const legend=()=>`<div class="legend">${CATS.map(c=>`<span><i class="dot" style="background:${catColor(c[0])}"></i>${c[1]}</span>`).join('')}</div>`;
+
+/* ---------- Invitado ---------- */
+let ME=store.get('me');let TAB='inicio';let AUTH='reg';let AUTHERR='';let CLUES=[];let SCANRES=null;let CAJAMSG=null;let MYVOTE={};let MYCHAR={};
+async function afterLoad(){
+  if(VIEW!=='guest')return;
+  if(ME&&!D.guests.find(g=>g.id===ME.gid)){ME=null;store.del('me')}
+  if(!ME)return;
+  const pend=store.get('pendingQR');
+  if(pend){store.del('pendingQR');try{SCANRES=await rpc('scan',{p_gid:ME.gid,p_pin:ME.pin,p_token:pend});TAB='tesoro';await load()}catch(e){toast(errMsg(e),true)}}
+  try{CLUES=await rpc('my_clues',{p_gid:ME.gid,p_pin:ME.pin})}catch(e){if(errMsg(e)===ERR.pin_incorrecto){ME=null;store.del('me')}}
+  const open=D.rounds.find(r=>r.status==='abierta');
+  if(open&&ME){
+    try{MYVOTE[open.id]=await rpc('my_vote',{p_gid:ME.gid,p_pin:ME.pin,p_round:open.id})}catch(e){}
+    if(open.kind==='dibujo'&&open.describer_id===ME.gid&&!MYCHAR[open.id]){try{MYCHAR[open.id]=await rpc('my_character',{p_gid:ME.gid,p_pin:ME.pin,p_round:open.id})}catch(e){}}
+  }
+}
+function authView(){
+  const reg=AUTH==='reg';const open=D.state.reg_open;
+  const pend=store.get('pendingQR');
+  return `<div class="app"><div class="card hl" style="gap:14px">
+  <div class="brand" style="font-size:30px">Misterio en casa de Lola<small>Cumpleaños 38 · viernes 30 de octubre</small></div>
+  <p class="mu">Alguien robó el tesoro de Lola. Regístrate para entrar al caso, ver tu mesa y sumar puntos toda la noche.</p>
+  ${pend?`<div class="alertb">${ic('qr')}<div>Encontraste un cartel<br><span>Regístrate o entra y la pista quedará guardada.</span></div></div>`:''}
+  <div class="tabs" style="position:static"><button class="${reg?'on':''}" data-act="authMode" data-v="reg">Registrarme</button><button class="${reg?'':'on'}" data-act="authMode" data-v="login">Ya me registré</button></div>
+  ${reg?(open?`<div class="fld"><label for="rg-name">Tu nombre</label><input type="text" id="rg-name" maxlength="24" autocomplete="off" autocapitalize="words"></div>
+  <div class="fld"><label for="rg-cos">Tu disfraz o personaje</label><input type="text" id="rg-cos" maxlength="40" placeholder="Por ejemplo: Sherlock Holmes" autocomplete="off"></div>
+  <div class="fld"><label for="rg-pin">Inventa un PIN de 4 números</label><input type="tel" id="rg-pin" inputmode="numeric" maxlength="4" placeholder="Lo usas si cambias de celular" autocomplete="off"></div>
+  <label class="chk"><input type="checkbox" id="rg-spec"> Solo quiero mirar (no compito)</label>
+  <button class="btn full" data-act="register">Entrar a la fiesta</button>`:`<p class="err">El registro está cerrado. Habla con Fernando.</p>`)
+  :`<div class="fld"><label for="lg-name">Tu nombre</label><input type="text" id="lg-name" maxlength="24" autocomplete="off" autocapitalize="words"></div>
+  <div class="fld"><label for="lg-pin">Tu PIN</label><input type="tel" id="lg-pin" inputmode="numeric" maxlength="4" autocomplete="off"></div>
+  <button class="btn full" data-act="login">Volver a entrar</button>`}
+  ${AUTHERR?`<p class="err">${esc(AUTHERR)}</p>`:''}
+  </div><p class="note">¿Problemas? Fernando puede registrarte desde su celular.</p></div>`;
+}
+function scanCard(){
+  if(!SCANRES)return'';const r=SCANRES;
+  const M={primero:[`¡Primero en encontrarlo! +${r.pts}`,'ok'],encontrado:['Pista registrada','mu'],repetido:['Ya tenías esta pista','mu'],trampa:['¡Trampa!','bad'],reto:['Reto','hot'],espera:['Este cartel aún no está activo','mu'],expirado:['Este cartel relámpago ya expiró','bad'],entrada:['Cartel de la entrada','mu'],invalido:['Este código no es de la fiesta','bad']};
+  const m=M[r.status]||['Cartel escaneado','mu'];
+  const extra=r.status==='encontrado'?'<p class="mu" style="font-size:13px">Alguien lo encontró antes que tú. La pista es tuya, pero sin puntos.</p>':r.status==='espera'?'<p class="mu" style="font-size:13px">Fernando lo activa en algún momento de la noche. Atento a las alertas.</p>':r.status==='expirado'?'<p class="mu" style="font-size:13px">Estuvo activo un rato y se te pasó.</p>':'';
+  return `<div class="card hl"><div class="row"><h3>Cartel ${r.num??''}</h3><button class="x sp" data-act="closeScan">Cerrar</button></div><p style="font-size:18px;font-weight:700" class="${m[1]==='ok'?'okt':m[1]==='bad'?'err':''}">${m[0]}</p>${r.clue?`<div class="clue">${esc(r.clue)}</div>`:''}${extra}</div>`;
+}
+function voteCard(g){
+  const r=D.rounds.find(x=>x.status==='abierta');if(!r)return'';
+  if(g.status!=='activo')return'';
+  if(r.kind==='dibujo'&&r.describer_id===g.id){
+    return `<div class="card hl"><h3>Te toca describir</h3><p class="mu">Describe este personaje sin decir su nombre. Nadie más lo ve.</p><div class="secret">${esc(MYCHAR[r.id]||'…')}</div><p class="mu" style="font-size:13px">Cuando terminen de dibujar, vota por el dibujo que más se parezca.</p>${voteList(g,r)}</div>`;
+  }
+  const title=r.kind==='disfraz'?'Vota por el mejor disfraz':'Vota por el dibujo más parecido';
+  const sub=r.kind==='disfraz'?'Voto secreto. El resultado se revela al final de la noche.':`Describe ${esc(gname(r.describer_id))}. Vota cuando todos muestren su dibujo.`;
+  return `<div class="card hl"><h3>${title}</h3><p class="mu" style="font-size:13px">${sub} No puedes votar por ti.</p>${voteList(g,r)}</div>`;
+}
+function voteList(g,r){
+  const c=players().filter(x=>x.id!==g.id&&!(r.kind==='dibujo'&&x.id===r.describer_id));
+  const mine=MYVOTE[r.id];
+  return `<div style="display:grid;gap:6px">${c.map(x=>`<button class="pick ${mine===x.id?'on':''}" data-act="vote" data-r="${r.id}" data-v="${x.id}"><span><b>${esc(x.name)}</b><small>${esc(x.costume)}</small></span>${mine===x.id?'<span class="sp badge ac">Tu voto</span>':''}</button>`).join('')}</div>${mine?'<p class="okt">Voto guardado. Puedes cambiarlo mientras la votación siga abierta.</p>':''}`;
+}
+function guestInicio(g){
+  const rk=ranking();const me=rk.find(x=>x.g.id===g.id);const cur=curAgenda();const nx=nextAgenda(cur);
+  let h=scanCard();
+  activeFlash().forEach(q=>{const m=Math.max(0,Math.ceil((+new Date(q.active_until)-Date.now())/60000));h+=`<div class="alertb">${ic('bolt')}<div>¡Alerta de pista!<br><span>Hay un cartel relámpago activo. Quedan <b data-cd="${q.active_until}">${m} min</b>.</span></div></div>`});
+  h+=voteCard(g);
+  if(g.role==='jugador'){
+    h+=`<div class="card"><h3>Tu puntaje</h3>${sealed()?`<p style="font-size:19px">${ic('lock')} Sumando los votos del disfraz…</p><p class="mu">El resultado final aparece en la pantalla grande.</p>`:`<div class="row"><span class="big">${me?me.t:0}</span><span class="mu">puntos</span><span class="sp badge ac">${me?me.r:'-'}.º de ${rk.length}</span></div>`}${g.status==='se_fue'?'<p class="mu">Marcado como "se fue". Tus puntos quedan guardados.</p>':''}</div>`;
+  }else h+=`<div class="card"><h3>Modo espectador</h3><p class="mu">Ves todo y votas, pero no entras al ranking. Si te animas a competir, avísale a Fernando.</p></div>`;
+  const mm=myMesa(g.id);
+  if(mm&&g.role==='jugador')h+=`<div class="card"><h3>Tu mesa ahora</h3><h2>${esc(mm.t)}</h2><p class="mu">${esc(mm.s)}</p></div>`;
+  if(cur)h+=`<div class="card"><h3>En la fiesta</h3><p style="font-weight:700">${hm(agTime(cur))} · ${esc(cur.title)}</p>${cur.descr?`<p class="mu">${esc(cur.descr)}</p>`:''}${nx?`<p class="mu" style="font-size:13px">Sigue a las ${hm(agTime(nx))}: ${esc(nx.title)}</p>`:''}</div>`;
+  else h+=`<div class="card"><h3>La fiesta</h3><p>Empieza el viernes a las ${hm(evStart())}.</p></div>`;
+  h+=cajaMini(g);
+  return h;
+}
+function cajaMini(g){
+  const st=D.state;
+  if(st.caja_winner)return `<div class="card"><h3>La caja del tesoro</h3><p>${ic('key')} Abierta por <b>${esc(gname(st.caja_winner))}</b>.</p></div>`;
+  if(g.no_caja)return `<div class="card"><h3>La caja del tesoro</h3><p class="mu">Eres a quien le robaron el tesoro: busca pistas y suma puntos, pero la caja la abre otro.</p></div>`;
+  return `<div class="card"><h3>La caja del tesoro</h3><p>${Date.now()<+new Date(st.caja_from)?`${ic('lock')} Se puede abrir desde las ${hm(st.caja_from)}.`:'Ya se puede abrir. Ve a la pestaña Tesoro.'}</p></div>`;
+}
+function guestPrograma(g){
+  const cur=curAgenda();
+  const grp=b=>{const by={};D.asg.filter(a=>a.block===b).forEach(a=>{const k=b==='hitster'?a.team:a.game;(by[k]=by[k]||[]).push(a)});return by};
+  const gA=grp('rondaA');const hit=grp('hitster');
+  const nm=a=>`<div style="${a.guest_id===g.id?'color:var(--ac);font-weight:700':''}">${esc(gname(a.guest_id))}</div>`;
+  return `<div class="card"><h3>Programa del viernes</h3><div class="list">${D.agenda.map(a=>`<div class="li ${a===cur?'now':''} ${a.status==='hecho'?'done':''} ${a.status==='saltado'?'skip':''}"><span class="t">${hm(agTime(a))}</span><div><b style="font-weight:500">${esc(a.title)}</b>${a.place?`<div class="mu" style="font-size:13px">${esc(a.place)}</div>`:''}</div></div>`).join('')}</div></div>
+  ${Object.keys(gA).length?`<div class="card"><h3>Grupos de las rondas A y B</h3><p class="mu" style="font-size:13px">En la ronda A cada grupo juega lo de su título; en la B se cruzan.</p><div class="grp">${Object.entries(gA).map(([k,v])=>`<div><h4>${esc(k)}</h4>${v.map(nm).join('')}</div>`).join('')}</div></div>`:''}
+  ${Object.keys(hit).length?`<div class="card"><h3>Parejas de Hitster</h3><div class="grp">${Object.entries(hit).map(([k,v])=>`<div><b style="font-weight:500">${esc(k)}</b>${v.map(nm).join('')}</div>`).join('')}</div></div>`:''}`;
+}
+const RULES=[
+ ['hitster','Hitster Bingo','En parejas, con música. Primera pareja en completar línea: 5 pts por persona. Segunda: 3. El resto: 1. Se juegan dos partidas.'],
+ ['justone','Just One','Cooperativo, 13 cartas. Uno adivina y el resto escribe una pista de una palabra; las pistas repetidas se borran. 11 a 13 aciertos: 4 pts para cada uno. 8 a 10: 3. 5 a 7: 2. Menos de 5: 1.'],
+ ['basta','Basta','Sale una categoría. Por turnos, di una palabra que empiece con una letra libre y aprieta esa letra antes de que se acabe el tiempo. Quien no alcanza, sale. Por partida: 3 pts al 1.º, 2 al 2.º, 1 al 3.º.'],
+ ['resistencia','La Resistencia','Todos a la vez, con Fernando de narrador. Hay espías escondidos entre la Resistencia; en cada misión se vota quién va y si sale bien o mal. Si son más de 10, algunas parejas comparten personaje. Ganadores +5 por persona, perdedores +1.'],
+ ['dibujo','Dibujo a ciegas','Alguien describe un personaje secreto (lo ve solo en su celular) sin decir quién es. El resto dibuja siguiendo las instrucciones. Al final se vota en la app el más parecido: 3, 2 y 1 pts. Quien describe suma 2.'],
+ ['disfraz','Desfile y mejor disfraz','Pasa con tu disfraz por la barra. Al final, votación secreta en la app: 5, 3 y 1 pts. El resultado se revela antes del marcador final. No puedes votarte.'],
+ ['tesoro','El Gran Robo','Busca los carteles QR por la casa y escanéalos con la cámara. Primero en encontrar un cartel: +1. Relámpago (solo activo un rato): +2. Hay trampas que restan 2. La caja se abre desde las 23:30, con al menos 4 pistas encontradas; un intento fallido te bloquea 15 minutos. Abrirla: +6. Lola no puede abrir la caja.'],
+ ['extras','Puntos extra','Los da Fernando: mejor actuación del disfraz +2, espíritu deportivo +2 y comodín de Lola +3.']];
+function guestJuegos(){
+  return `<div class="card"><h3>Reglas y puntos</h3>${RULES.map(r=>`<details><summary><i class="dot" style="background:${catColor(r[0])}"></i>${r[1]}</summary><p>${r[2]}</p></details>`).join('')}</div><div class="card"><h3>Con quién hablar</h3><p class="mu">Fernando es el árbitro. Él anota los puntos de las mesas y resuelve dudas.</p></div>`;
+}
+function guestMarcador(g){
+  if(sealed())return `<div class="card" style="text-align:center;padding:32px 16px"><p style="font-size:34px">${ic('lock')}</p><h2>Sumando los votos</h2><p class="mu">El marcador final aparece en la pantalla grande.</p></div>`;
+  const rk=ranking();
+  if(!rk.length)return `<div class="card"><h3>Marcador</h3><p class="mu">Todavía no hay jugadores registrados.</p></div>`;
+  return `<div class="card"><h3>Marcador</h3><div>${board(rk,g.id,mxOf(rk),D.state.final_revealed)}</div>${legend()}${!D.state.votes_revealed?'<p class="mu" style="font-size:12px">Los votos del mejor disfraz se suman al final.</p>':''}</div>`;
+}
+function guestTesoro(g){
+  const st=D.state;let h=scanCard();
+  const pistas=CLUES.filter(c=>c.kind==='pista');
+  const myAtt=D.att.filter(a=>a.guest_id===g.id&&!a.ok).map(a=>+new Date(a.at));
+  const lockUntil=myAtt.length?Math.max(...myAtt)+15*60000:0;const locked=Date.now()<lockUntil;
+  const early=Date.now()<+new Date(st.caja_from);
+  let caja;
+  if(st.caja_winner)caja=`<p>${ic('key')} Abierta por <b>${esc(gname(st.caja_winner))}</b>.</p>${st.caja_winner===g.id&&CAJAMSG&&CAJAMSG.premio?`<div class="clue"><small>El tesoro está en</small>${esc(CAJAMSG.premio)}</div>`:''}`;
+  else if(g.no_caja)caja=`<p class="mu">Eres a quien le robaron el tesoro: puedes buscar pistas y sumar puntos, pero no abrir la caja.</p>`;
+  else if(g.role!=='jugador')caja=`<p class="mu">Solo los jugadores pueden abrir la caja.</p>`;
+  else caja=`<p class="mu" style="font-size:14px">Código de 6 números. ${early?`Se abre desde las <b>${hm(st.caja_from)}</b>.`:'Ya se puede abrir.'} Necesitas ${st.caja_min_finds} pistas (tienes ${pistas.length}). Un intento fallido te bloquea 15 minutos.</p>
+   <div class="row"><input type="tel" id="caja-in" inputmode="numeric" maxlength="6" placeholder="000000" style="width:150px;font:500 22px var(--f-mono);text-align:center;letter-spacing:.15em" ${locked||early?'disabled':''}><button class="btn" data-act="caja" ${locked||early?'disabled':''}>Probar</button></div>${locked?`<p class="err">Bloqueado hasta las ${hm(lockUntil)}.</p>`:''}`;
+  if(CAJAMSG&&CAJAMSG.t)caja+=`<p class="${CAJAMSG.ok?'okt':'err'}">${esc(CAJAMSG.t)}</p>`;
+  h+=`<div class="card ${st.caja_winner?'':'hl'}"><h3>La caja del tesoro</h3>${caja}</div>`;
+  h+=`<div class="card"><h3>Tus pistas (${pistas.length})</h3>${pistas.length?pistas.map(c=>`<div class="clue"><small>Cartel ${c.num}${c.first?' · encontrado primero por ti':''}</small>${esc(c.clue)}</div>`).join(''):'<p class="mu">Aún no escaneas carteles. Búscalos por toda la casa y apúntales con la cámara del celular.</p>'}</div>`;
+  const others=CLUES.filter(c=>c.kind==='trampa'||c.kind==='reto');
+  if(others.length)h+=`<div class="card"><h3>Trampas y retos</h3>${others.map(c=>`<div class="clue"><small>Cartel ${c.num}</small>${esc(c.clue)}</div>`).join('')}</div>`;
+  h+=`<div class="card"><h3>Cómo escanear</h3><p class="mu">Abre la cámara del celular, apunta al cartel y toca el enlace que aparece. La pista queda guardada aquí.</p></div>`;
+  return h;
+}
+function renderGuest(){
+  const root=$('#root');
+  if(!ME){root.innerHTML=authView();return}
+  const g=D.guests.find(x=>x.id===ME.gid);if(!g){root.innerHTML=authView();return}
+  const T=[['inicio','Inicio'],['programa','Programa'],['juegos','Reglas'],['marcador','Marcador'],['tesoro','Tesoro']];
+  const body={inicio:guestInicio,programa:guestPrograma,juegos:guestJuegos,marcador:guestMarcador,tesoro:guestTesoro}[TAB](g);
+  root.innerHTML=`<div class="app"><header class="top"><div class="brand">Misterio en casa de Lola<small>Cumpleaños 38</small></div><div class="who"><div><b>${esc(g.name)}</b><small>${esc(g.costume)}</small></div><div class="av">${esc(g.name[0]||'?')}</div></div></header>
+  <nav class="tabs" aria-label="Secciones">${T.map(t=>`<button class="${TAB===t[0]?'on':''}" data-act="tab" data-v="${t[0]}">${t[1]}</button>`).join('')}</nav>${body}
+  <p class="note">${esc(g.name)} · <button class="x" data-act="logout">Salir de este celular</button></p></div>`;
+}
+
+/* ---------- Admin ---------- */
+let APIN=sstore.get('apin');let ASEC='ahora';let ALOG=[];let AQR=[];let ASECRETS=null;let ACHAR={};let APTS={g:new Set(),cat:'extras',pts:2};let AFORM={};
+async function adminLoad(){
+  if(!APIN)return;
+  try{const [l,q]=await Promise.all([rpc('admin_list_points',{p_admin:APIN}),rpc('admin_qr_list',{p_admin:APIN})]);ALOG=l||[];AQR=q||[];
+    const open=D.rounds.find(r=>r.status==='abierta'&&r.kind==='dibujo');if(open&&!ACHAR[open.id])ACHAR[open.id]=await rpc('admin_round_character',{p_admin:APIN,p_round:open.id});
+  }catch(e){if(errMsg(e)===ERR.admin_pin_incorrecto){APIN=null;sstore.set('apin','')}toast(errMsg(e),true)}
+}
+async function A(fn,args,ok){try{const r=await rpc(fn,Object.assign({p_admin:APIN},args||{}));if(ok)toast(ok);await load();await adminLoad();render();return r}catch(e){toast(errMsg(e),true);throw e}}
+function adminLogin(){return `<div class="app"><div class="card hl"><div class="brand">Árbitro<small>Misterio en casa de Lola</small></div><div class="fld"><label for="ad-pin">PIN de árbitro</label><input type="password" id="ad-pin" inputmode="numeric" maxlength="8" autocomplete="off"></div><button class="btn full" data-act="adminLogin">Entrar</button></div></div>`}
+function gChips(sel,act,list){return `<div class="sel">${(list||players()).map(g=>`<button class="chip ${sel.has(g.id)?'on':''}" data-act="${act}" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</div>`}
+function groupOf(block,game){return D.asg.filter(a=>a.block===block&&(!game||a.game===game)).map(a=>a.guest_id)}
+function adminAhora(){
+  const cur=curAgenda();const nx=nextAgenda(cur);const auto=!D.state.current_agenda;
+  return `<div class="card hl"><h3>Bloque actual ${auto?'<span class="badge">automático por hora</span>':'<span class="badge ac">manual</span>'}</h3>
+  <h2>${cur?esc(cur.title):'Antes de la fiesta'}</h2>${cur&&cur.alexa?`<p>Di: <span class="kbd">"${esc(cur.alexa)}"</span></p>`:''}
+  <div class="row"><button class="btn ghost sm" data-act="agPrev">Anterior</button><button class="btn" data-act="agNext">Pasar a: ${nx?esc(nx.title):'fin'}</button>${auto?'':'<button class="btn ghost sm" data-act="agAuto">Volver a automático</button>'}</div>
+  ${nx&&nx.alexa?`<p class="mu" style="font-size:13px">En el siguiente: <span class="kbd">"${esc(nx.alexa)}"</span></p>`:''}</div>
+  <div class="card"><h3>Atajos</h3><div class="row"><span>Registro de invitados</span><button class="btn ghost sm sp" data-act="regToggle">${D.state.reg_open?'Abierto: cerrar':'Cerrado: abrir'}</button></div>
+  <div class="row"><span>${players().length} jugadores · ${D.guests.filter(g=>g.role==='espectador').length} espectadores</span></div>
+  ${activeFlash().map(q=>`<div class="alertb">${ic('bolt')} Cartel ${q.num} activo hasta ${hm(q.active_until)}</div>`).join('')}</div>
+  <div class="card"><h3>Programa</h3><div class="list">${D.agenda.map(a=>`<div class="li ${a===cur?'now':''} ${a.status==='hecho'?'done':''} ${a.status==='saltado'?'skip':''}"><span class="t">${hm(agTime(a))}</span><div style="flex:1"><b style="font-weight:500">${esc(a.title)}</b><div class="row" style="gap:4px;margin-top:4px"><button class="x" data-act="agSet" data-v="${a.id}">Ir aquí</button><button class="x" data-act="agShift" data-v="${a.ord}" data-d="-5">−5 min</button><button class="x" data-act="agShift" data-v="${a.ord}" data-d="5">+5 min</button><button class="x" data-act="agShift" data-v="${a.ord}" data-d="15">+15 min</button><button class="x" data-act="agSkip" data-v="${a.id}">${a.status==='saltado'?'Recuperar':'Saltar'}</button></div></div></div>`).join('')}</div><p class="mu" style="font-size:12px">Los botones de minutos mueven ese bloque y todos los siguientes.</p></div>`;
+}
+function adminPuntos(){
+  const P=APTS;const pl=players();
+  const hit=[...new Set(D.asg.filter(a=>a.block==='hitster').map(a=>a.team))];
+  const games=b=>[...new Set(D.asg.filter(a=>a.block===b).map(a=>a.game))];
+  const jo=[...games('rondaA'),...games('rondaB')].length?[['rondaA','Just One'],['rondaB','Just One']]:[];
+  const bas=[['rondaA','Basta'],['rondaB','Basta']];
+  const F=AFORM;
+  return `<div class="card hl"><h3>Sumar puntos a mano</h3>${gChips(P.g,'ptG',pl)}
+  <div class="sel">${CATS.map(c=>`<button class="chip ${P.cat===c[0]?'on':''}" data-act="ptCat" data-v="${c[0]}">${c[1]}</button>`).join('')}</div>
+  <div class="sel">${[-2,1,2,3,4,5,6].map(n=>`<button class="chip ${P.pts===n?'on':''}" data-act="ptPts" data-v="${n}">${n>0?'+':''}${n}</button>`).join('')}</div>
+  <div class="fld"><label for="pt-note">Nota (opcional)</label><input type="text" id="pt-note" maxlength="60"></div>
+  <div class="row"><button class="btn" data-act="ptAdd" ${P.g.size?'':'disabled'}>Sumar ${P.pts>0?'+':''}${P.pts} a ${P.g.size} persona${P.g.size===1?'':'s'}</button><button class="x" data-act="ptClear">Limpiar selección</button></div>
+  <div class="row"><span class="mu" style="font-size:13px">Extras rápidos:</span><button class="btn ghost sm" data-act="ptQuick" data-c="extras" data-p="2" data-n="Mejor actuación">Mejor actuación +2</button><button class="btn ghost sm" data-act="ptQuick" data-c="extras" data-p="2" data-n="Espíritu deportivo">Espíritu deportivo +2</button><button class="btn ghost sm" data-act="ptQuick" data-c="extras" data-p="3" data-n="Comodín de Lola">Comodín de Lola +3</button></div></div>
+  <div class="card"><h3>Resultado Hitster (por partida)</h3>${hit.length?`<div class="fld"><label for="h1">Primera línea (5 c/u)</label><select id="h1">${hit.map(t=>`<option>${esc(t)}</option>`).join('')}</select></div><div class="fld"><label for="h2">Segunda línea (3 c/u)</label><select id="h2"><option value="">Nadie</option>${hit.map(t=>`<option>${esc(t)}</option>`).join('')}</select></div><button class="btn" data-act="resHit">Anotar partida (el resto suma 1)</button>`:'<p class="mu">Primero sortea las parejas en Grupos.</p>'}</div>
+  <div class="card"><h3>Resultado Just One</h3><div class="fld"><label for="jo-b">Ronda</label><select id="jo-b"><option value="rondaA">Ronda A</option><option value="rondaB">Ronda B</option></select></div><div class="fld"><label for="jo-n">Aciertos (de 13)</label><input type="number" id="jo-n" min="0" max="13" value="9"></div><button class="btn" data-act="resJO">Anotar a toda la mesa</button></div>
+  <div class="card"><h3>Resultado Basta (por partida)</h3><div class="fld"><label for="ba-b">Ronda</label><select id="ba-b" data-ch="baRound"><option value="rondaA" ${F.ba!=='rondaB'?'selected':''}>Ronda A</option><option value="rondaB" ${F.ba==='rondaB'?'selected':''}>Ronda B</option></select></div>
+  ${(()=>{const ids=groupOf(F.ba||'rondaA','Basta');const opts=`<option value="">—</option>`+ids.map(id=>`<option value="${id}">${esc(gname(id))}</option>`).join('');return ids.length?`<div class="grp" style="grid-template-columns:repeat(3,1fr)"><div class="fld"><label for="b1">1.º (3)</label><select id="b1">${opts}</select></div><div class="fld"><label for="b2">2.º (2)</label><select id="b2">${opts}</select></div><div class="fld"><label for="b3">3.º (1)</label><select id="b3">${opts}</select></div></div><button class="btn" data-act="resBasta">Anotar partida</button>`:'<p class="mu">Primero sortea los grupos.</p>'})()}</div>
+  <div class="card"><h3>Resultado Resistencia</h3><p class="mu" style="font-size:13px">Marca a los ganadores. Los demás jugadores activos suman 1.</p>${gChips(F.res||new Set(),'resG',pl)}<button class="btn" data-act="resRes" ${(F.res&&F.res.size)?'':'disabled'}>Ganadores +5, resto +1</button></div>
+  <div class="card"><h3>Últimas anotaciones</h3><div class="tbl">${ALOG.slice(0,25).map(l=>`<div class="tr"><div>${esc(gname(l.guest_id))} <b class="mono" style="color:${catColor(l.cat)}">${l.pts>0?'+':''}${l.pts}</b>${l.hidden?' <span class="badge hot">oculto</span>':''}<small>${catName(l.cat)} · ${esc(l.note)} · ${hm(l.created_at)}</small></div><button class="x" data-act="ptDel" data-v="${l.id}">Anular</button></div>`).join('')||'<p class="mu">Sin anotaciones.</p>'}</div></div>`;
+}
+function adminGrupos(){
+  const hit={};D.asg.filter(a=>a.block==='hitster').forEach(a=>(hit[a.team]=hit[a.team]||[]).push(a.guest_id));
+  const A1={};D.asg.filter(a=>a.block==='rondaA').forEach(a=>(A1[a.game]=A1[a.game]||[]).push(a.guest_id));
+  const assigned=new Set(D.asg.filter(a=>a.block==='rondaA').map(a=>a.guest_id));
+  const unA=players().filter(g=>!assigned.has(g.id));
+  const assignedH=new Set(D.asg.filter(a=>a.block==='hitster').map(a=>a.guest_id));
+  const unH=players().filter(g=>!assignedH.has(g.id));
+  return `<div class="card hl"><h3>Parejas de Hitster</h3>${Object.keys(hit).length?`<div class="grp">${Object.entries(hit).map(([t,ids])=>`<div><b style="font-weight:500">${esc(t)}</b><br><span class="mu">${ids.map(i=>esc(gname(i))).join(', ')}</span></div>`).join('')}</div>`:'<p class="mu">Sin sortear.</p>'}
+  ${unH.length&&Object.keys(hit).length?`<p class="mu" style="font-size:13px">Sin pareja: ${unH.map(g=>esc(g.name)).join(', ')}</p><button class="btn ghost sm" data-act="hitLate">Sumarlos a las parejas más chicas</button>`:''}
+  <button class="btn ghost" data-act="drawHit">Sortear parejas</button></div>
+  <div class="card hl"><h3>Grupos de las rondas A y B</h3><p class="mu" style="font-size:13px">Grupo 1: Just One en la terraza en la ronda A, Basta en el living en la B. Grupo 2 al revés. Los fumadores van primero al grupo 1.</p>
+  ${Object.keys(A1).length?`<div class="grp">${Object.entries(A1).map(([g,ids])=>`<div><h4>${g==='Just One'?'Grupo 1':'Grupo 2'}</h4><span class="mu" style="font-size:13px">Ronda A: ${esc(g)}</span>${ids.map(i=>`<div>${esc(gname(i))}</div>`).join('')}</div>`).join('')}</div>`:'<p class="mu">Sin sortear.</p>'}
+  ${unA.length&&Object.keys(A1).length?`<p class="mu" style="font-size:13px">Sin grupo: ${unA.map(g=>esc(g.name)).join(', ')}</p><button class="btn ghost sm" data-act="grpLate">Sumarlos al grupo más chico</button>`:''}
+  <button class="btn ghost" data-act="drawGrp">Sortear grupos</button></div>`;
+}
+function adminInvitados(){
+  return `<div class="card hl"><h3>Registrar a alguien</h3><div class="fld"><label for="ng-name">Nombre</label><input type="text" id="ng-name" maxlength="24"></div><div class="fld"><label for="ng-cos">Disfraz</label><input type="text" id="ng-cos" maxlength="40"></div><div class="fld"><label for="ng-pin">PIN de 4 números (díselo)</label><input type="tel" id="ng-pin" inputmode="numeric" maxlength="4"></div><label class="chk"><input type="checkbox" id="ng-spec"> Espectador</label><button class="btn" data-act="gAdd">Registrar</button></div>
+  <div class="card"><h3>Invitados (${D.guests.length})</h3><div class="tbl">${D.guests.map(g=>`<div class="tr" style="grid-template-columns:1fr"><div><b style="font-weight:500">${esc(g.name)}</b> <span class="mu">${esc(g.costume)}</span><small>${g.role}${g.status==='se_fue'?' · se fue':''}${g.smoker?' · fuma':''}${g.no_caja?' · sin caja':''}</small></div>
+  <div class="row" style="gap:4px"><button class="x" data-act="gUpd" data-v="${g.id}" data-k="role" data-x="${g.role==='jugador'?'espectador':'jugador'}">${g.role==='jugador'?'Pasar a espectador':'Pasar a jugador'}</button><button class="x" data-act="gUpd" data-v="${g.id}" data-k="status" data-x="${g.status==='activo'?'se_fue':'activo'}">${g.status==='activo'?'Se fue':'Volvió'}</button><button class="x" data-act="gUpd" data-v="${g.id}" data-k="smoker" data-x="${!g.smoker}">${g.smoker?'No fuma':'Fuma'}</button><button class="x" data-act="gUpd" data-v="${g.id}" data-k="no_caja" data-x="${!g.no_caja}">${g.no_caja?'Puede abrir caja':'Sin caja'}</button><button class="x" data-act="gPin" data-v="${g.id}">Nuevo PIN</button><button class="x" data-act="gDel" data-v="${g.id}">Quitar</button></div></div>`).join('')||'<p class="mu">Nadie registrado todavía.</p>'}</div></div>`;
+}
+function adminVotos(){
+  const open=D.rounds.find(r=>r.status==='abierta');const closed=D.rounds.filter(r=>r.status==='cerrada');
+  const nd=D.rounds.filter(r=>r.kind==='dibujo').length;
+  let h=`<div class="card hl"><h3>Votación abierta</h3>${open?`<h2>${open.kind==='dibujo'?'Dibujo, ronda '+nd:'Mejor disfraz'}</h2>${open.kind==='dibujo'?`<p>Describe <b>${esc(gname(open.describer_id))}</b>. Personaje: <span class="kbd">${esc(ACHAR[open.id]||'…')}</span></p>`:''}<p>${open.n_votes} votos de ${D.guests.filter(g=>g.status==='activo').length} personas.</p><button class="btn" data-act="rClose" data-v="${open.id}">Cerrar y sumar puntos</button>`:`<p class="mu">No hay votación abierta.</p><div class="row"><button class="btn" data-act="rOpen" data-v="dibujo">Abrir ronda de dibujo ${nd+1}</button><button class="btn hot" data-act="rOpen" data-v="disfraz">Abrir votación de disfraz</button></div><p class="mu" style="font-size:12px">Al abrir una ronda de dibujo, la app elige al azar quién describe y el personaje.</p>`}</div>`;
+  h+=`<div class="card"><h3>Revelación final</h3><p class="mu" style="font-size:13px">Paso 1 muestra en la TV el podio del disfraz y suma esos votos. Paso 2 lanza el marcador final con cuenta regresiva.</p><div class="row"><button class="btn hot" data-act="reveal1" ${D.state.votes_revealed?'disabled':''}>1. Revelar mejor disfraz</button><button class="btn" data-act="reveal2" ${!D.state.votes_revealed||D.state.final_revealed?'disabled':''}>2. Revelar marcador final</button></div>${D.state.final_revealed?'<button class="x" data-act="unreveal">Volver a ocultar (para ensayar)</button>':''}</div>`;
+  if(closed.length)h+=`<div class="card"><h3>Votaciones cerradas</h3>${closed.map(r=>`<div class="tr"><div>${r.kind==='dibujo'?'Dibujo':'Disfraz'} · ${r.n_votes} votos<small>${r.kind==='dibujo'?`Describió ${esc(gname(r.describer_id))} · ${esc(r.revealed_character||'')}`:''}</small></div></div>`).join('')}</div>`;
+  return h;
+}
+function adminTesoro(){
+  const st=D.state;
+  return `<div class="card hl"><h3>Carteles</h3><div class="tbl">${AQR.map(q=>{const on=q.active_from&&Date.now()<+new Date(q.active_until);const exp=q.active_from&&!on;
+   const tag={entrada:'<span class="badge">entrada</span>',perm:'<span class="badge">permanente</span>',falso:'<span class="badge">falso</span>',rel:on?`<span class="badge hot">activo hasta ${hm(q.active_until)}</span>`:exp?'<span class="badge">expirado</span>':`<span class="badge">relámpago ${q.sug_min!=null?hm(+evStart()+q.sug_min*60000):''}</span>`,trampa:'<span class="badge bad">trampa</span>',reto:'<span class="badge">reto</span>'}[q.real_kind];
+   return `<div class="tr"><div>Cartel ${q.num} · ${esc(q.place)} ${tag}<small>${esc(q.clue)}${q.first_guest?' · primero: '+esc(gname(q.first_guest)):''}</small></div>${q.real_kind==='rel'?(on?`<button class="btn ghost sm" data-act="qOff" data-v="${q.id}">Apagar</button>`:`<button class="btn sm" data-act="qOn" data-v="${q.id}" data-m="${q.num===8?25:30}">Activar ${q.num===8?25:30} min</button>`):''}</div>`}).join('')}</div>
+  <p class="mu" style="font-size:12px">Al activar un relámpago, la TV y los celulares muestran la alerta. Di <span class="kbd">"Alexa, alerta"</span>.</p></div>
+  <div class="card"><h3>La caja</h3><p>${st.caja_winner?`Abierta por <b>${esc(gname(st.caja_winner))}</b> a las ${hm(st.caja_opened_at)}.`:`Cerrada. Se abre desde las ${hm(st.caja_from)}.`}</p>
+  <div class="fld"><label for="prize">Dónde está escondido el premio (lo ve quien abre la caja)</label><input type="text" id="prize" maxlength="120" placeholder="${ASECRETS?esc(ASECRETS.prize_location):'Por ejemplo: dentro del microondas'}"></div><button class="btn ghost sm" data-act="prizeSave">Guardar lugar</button>
+  <div class="row"><button class="btn ghost sm" data-act="cajaNow">Permitir abrir la caja ahora</button><button class="btn ghost sm" data-act="cajaFri">Volver a las 23:30 del viernes</button></div></div>
+  <div class="card"><h3>Imprimir carteles</h3><p class="mu" style="font-size:13px">Abre una página con los 13 carteles listos para imprimir.</p><button class="btn ghost" data-act="printQR">Ver carteles para imprimir</button></div>`;
+}
+function adminSistema(){
+  const base=location.origin+location.pathname;
+  return `<div class="card hl"><h3>Enlaces</h3><p>Invitados: <span class="kbd">${esc(base)}</span></p><p>TV: <span class="kbd">${esc(base)}?v=tv</span></p><p>Árbitro: <span class="kbd">${esc(base)}?v=admin</span></p></div>
+  <div class="card"><h3>Ensayo</h3><p class="mu" style="font-size:13px">Para probar antes del viernes usa "Ir aquí" en el programa para simular el bloque. Cuando termines el ensayo, empieza de nuevo: se borran invitados, puntos, votos y hallazgos.</p><div class="fld"><label for="rs-c">Escribe EMPEZAR DE NUEVO</label><input type="text" id="rs-c" autocomplete="off"></div><button class="btn bad" data-act="reset">Empezar de nuevo</button></div>
+  <div class="card"><h3>Cambiar PIN de árbitro</h3><div class="fld"><label for="np">Nuevo PIN</label><input type="tel" id="np" inputmode="numeric" maxlength="8"></div><button class="btn ghost sm" data-act="newPin">Cambiar</button></div>
+  <div class="card"><button class="btn ghost" data-act="adminOut">Salir del modo árbitro</button></div>`;
+}
+function renderAdmin(){
+  if(!APIN){$('#root').innerHTML=adminLogin();return}
+  const S=[['ahora','Ahora'],['puntos','Puntos'],['grupos','Grupos'],['votos','Votaciones'],['tesoro','Tesoro'],['invitados','Invitados'],['sistema','Sistema']];
+  const body={ahora:adminAhora,puntos:adminPuntos,grupos:adminGrupos,votos:adminVotos,tesoro:adminTesoro,invitados:adminInvitados,sistema:adminSistema}[ASEC]();
+  $('#root').innerHTML=`<div class="app adm"><header class="top"><div class="brand">Árbitro<small>Misterio en casa de Lola</small></div><div class="who"><div><b>Fernando</b><small>${players().length} jugadores</small></div><div class="av" style="background:var(--ac);color:var(--acink)">F</div></div></header><nav class="tabs">${S.map(s=>`<button class="${ASEC===s[0]?'on':''}" data-act="aSec" data-v="${s[0]}">${s[1]}</button>`).join('')}</nav>${body}</div>`;
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+function groupRows(g1,g2){
+  const r=[];g1.forEach(id=>{r.push({b:'rondaA',guest_id:id,zone:'Terraza Pedidos Ya',game:'Just One'});r.push({b:'rondaB',guest_id:id,zone:'Living',game:'Basta'})});
+  g2.forEach(id=>{r.push({b:'rondaA',guest_id:id,zone:'Living',game:'Basta'});r.push({b:'rondaB',guest_id:id,zone:'Terraza Pedidos Ya',game:'Just One'})});
+  return r;
+}
+async function saveGroups(g1,g2){const r=groupRows(g1,g2);await A('admin_set_block',{p_block:'rondaA',p_rows:r.filter(x=>x.b==='rondaA')});await A('admin_set_block',{p_block:'rondaB',p_rows:r.filter(x=>x.b==='rondaB')},'Grupos guardados')}
+async function saveHit(teams){const rows=[];teams.forEach((ids,i)=>ids.forEach(id=>rows.push({guest_id:id,team:'Pareja '+(i+1),zone:'Living',game:'Hitster'})));await A('admin_set_block',{p_block:'hitster',p_rows:rows},'Parejas guardadas')}
+
+/* ---------- TV ---------- */
+let TVPREV=null;let TVANIM=null;let TVOV=null;
+function tvHTML(){
+  const st=D.state;const rk=ranking();const N=rk.length;const cur=curAgenda();const nx=nextAgenda(cur);
+  const rh=Math.max(26,Math.min(46,Math.floor(520/Math.max(N,1))));
+  let left='';
+  if(TVANIM&&TVANIM.type==='final'){
+    const A=TVANIM;left=`<h2>Marcador final</h2>${A.cd>0?`<div style="display:grid;place-items:center;flex:1"><span style="font:500 180px var(--f-mono);color:var(--hot)">${A.cd}</span></div>`:`<div style="--rh:${rh}px">${rk.map((x,i)=>`<div class="${i>=N-A.n?'pop':'hid'}">${board([x],null,mxOf(rk),true)}</div>`).join('')}</div>`}`;
+  }else if(sealed()){
+    left=`<h2>Marcador sellado</h2><div style="--rh:${rh}px">${rk.slice().sort((a,b)=>a.g.name.localeCompare(b.g.name)).map(x=>`<div class="brow"><span class="rk">·</span><span class="bn">${esc(x.g.name)}<small>${esc(x.g.costume)}</small></span><span class="bbar seal"></span><b class="bt">?</b></div>`).join('')}</div><p class="mu" style="font-size:20px">${ic('lock')} Sumando los votos del disfraz…</p>`;
+  }else if(!N){
+    left=`<h2>Marcador</h2><div style="flex:1;display:grid;place-items:center;text-align:center"><div><p class="tvlogo" style="font-size:54px">Bienvenidos</p><p style="font-size:24px" class="mu">Escanea el QR de la puerta para entrar al caso</p></div></div>`;
+  }else left=`<h2>${st.final_revealed?'Marcador final':'Marcador en vivo'}</h2><div style="--rh:${rh}px">${board(rk,null,mxOf(rk),st.final_revealed)}</div>${legend()}`;
+  const hit=D.asg.filter(a=>a.block==='hitster');
+  let mesas='';
+  if(cur&&(cur.kind==='rondaA'||cur.kind==='rondaB')){const by={};D.asg.filter(a=>a.block===cur.kind).forEach(a=>(by[a.game+' · '+a.zone]=by[a.game+' · '+a.zone]||[]).push(gname(a.guest_id)));mesas=Object.entries(by).map(([k,v])=>`<p><b>${esc(k)}</b><br><span class="mu">${v.map(esc).join(', ')}</span></p>`).join('')}
+  else if(cur&&cur.kind==='hitster'&&hit.length){const by={};hit.forEach(a=>(by[a.team]=by[a.team]||[]).push(gname(a.guest_id)));mesas=Object.entries(by).map(([k,v])=>`<p style="font-size:15px"><b>${esc(k)}:</b> ${v.map(esc).join(' y ')}</p>`).join('')}
+  let right=`<div class="tvc"><h3>Ahora</h3><div class="v">${cur?esc(cur.title):'Muy pronto'}</div><p class="mu">${cur?esc(cur.place):'Viernes '+hm(evStart())}</p></div>`;
+  if(mesas)right+=`<div class="tvc">${mesas}</div>`;
+  if(nx)right+=`<div class="tvc"><h3>Después</h3><p><b>${hm(agTime(nx))}</b> · ${esc(nx.title)}</p></div>`;
+  if(st.final_revealed&&rk[0]&&!(TVANIM&&TVANIM.type==='final'))right=`<div class="tvc" style="border-color:var(--ac)"><h3>Ganador de la noche</h3><div class="v" style="font-size:42px">${esc(rk[0].g.name)}</div><p>${esc(rk[0].g.costume)} · ${rk[0].t} puntos</p></div>`+right;
+  const found=D.qrs.filter(q=>q.kind!=='entrada'&&q.first_guest).length;const tot=D.qrs.filter(q=>q.kind!=='entrada').length;
+  right+=`<div class="tvc"><h3>El Gran Robo</h3><p>Carteles encontrados: <b>${found} de ${tot}</b></p><p>${st.caja_winner?`Caja abierta por <b>${esc(gname(st.caja_winner))}</b>`:'La caja sigue cerrada'}</p></div>`;
+  const last=D.log.filter(l=>!l.hidden).slice(-3).reverse();
+  if(last.length&&!st.final_revealed)right+=`<div class="tvc"><h3>Últimas jugadas</h3>${last.map(l=>`<p style="font-size:16px"><b class="mono" style="color:${catColor(l.cat)}">${l.pts>0?'+':''}${l.pts}</b> ${esc(gname(l.guest_id))} <span class="mu">${catName(l.cat)}</span></p>`).join('')}</div>`;
+  const vr=D.rounds.find(r=>r.status==='abierta');
+  const strip=vr&&!TVANIM?`<div class="tvstrip">${vr.kind==='disfraz'?'Vota por el mejor disfraz desde tu celular':'Vota en tu celular por el dibujo más parecido'} · ${vr.n_votes} votos</div>`:'';
+  let ov='';
+  if(TVOV&&Date.now()<TVOV.until){
+    if(TVOV.type==='alerta'){const q=D.qrs.find(x=>x.id===TVOV.q);const m=q?Math.max(0,Math.ceil((+new Date(q.active_until)-Date.now())/60000)):30;ov=`<div class="tvov"><div class="h">¡Alerta de pista!</div><div class="s">Hay un cartel relámpago activo en la casa</div><div class="n">${m} min</div></div>`}
+    if(TVOV.type==='caja')ov=`<div class="tvov"><div class="h">¡La caja se abrió!</div><div class="s">${esc(gname(st.caja_winner))} resolvió el misterio</div></div>`;
+    if(TVOV.type==='disfraz')ov=disfrazOv();
+    if(TVOV.type==='dibujo')ov=`<div class="tvov"><div class="s">El personaje era</div><div class="h">${esc(TVOV.c)}</div></div>`;
+  }
+  return `<div class="tvh"><div class="tvlogo">Misterio en casa de Lola</div><div class="tvclk" id="tvclk">${hm(Date.now())}</div><div class="tvmeta">${N} detectives<br>Lola cumple 38</div></div><div class="tvm"><section class="tvl">${left}</section><aside class="tvr">${right}</aside></div>${strip}${ov}<canvas class="tvcf" id="tvcf" width="1280" height="720"></canvas>`;
+}
+function disfrazOv(){
+  const by={};D.log.filter(l=>l.cat==='disfraz').forEach(l=>by[l.guest_id]=(by[l.guest_id]||0)+l.pts);
+  const top=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  const g=id=>D.guests.find(x=>x.id===id)||{name:'?',costume:''};
+  const order=[top[1],top[0],top[2]];const hts=[150,210,110];const pl=['2.º','1.º','3.º'];
+  return `<div class="tvov"><div class="h" style="font-size:64px">Mejor disfraz</div><div class="podium">${order.map((t,i)=>t?`<div><b>${esc(g(t[0]).name)}</b><small>${esc(g(t[0]).costume)} · +${t[1]}</small><i style="height:${hts[i]}px">${pl[i]}</i></div>`:'<div></div>').join('')}</div></div>`;
+}
+function renderTV(){
+  document.body.classList.add('tvmode');
+  if(!$('#tvstage'))$('#root').innerHTML='<div class="tvwrap" id="tvwrap"><div class="tvstage" id="tvstage"></div></div>';
+  $('#tvstage').innerHTML=tvHTML();fitTV();
+}
+function fitTV(){const w=$('#tvwrap');if(!w)return;const s=Math.min(w.clientWidth/1280,w.clientHeight/720);$('#tvstage').style.transform=`translate(${(w.clientWidth-1280*s)/2}px,${(w.clientHeight-720*s)/2}px) scale(${s})`}
+function tvDetect(){
+  const st=D.state;const p=TVPREV;TVPREV={msgAt:st.tv_message_at,caja:st.caja_opened_at,vr:st.votes_revealed,fr:st.final_revealed,closed:D.rounds.filter(r=>r.status==='cerrada'&&r.kind==='dibujo').map(r=>r.id).join()};
+  if(!p)return;
+  if(st.tv_message_at&&st.tv_message_at!==p.msgAt&&(st.tv_message||'').startsWith('alerta:')){TVOV={type:'alerta',q:+st.tv_message.split(':')[1],until:Date.now()+20000}}
+  if(st.caja_opened_at&&st.caja_opened_at!==p.caja){TVOV={type:'caja',until:Date.now()+15000};setTimeout(confetti,100)}
+  const nowClosed=D.rounds.filter(r=>r.status==='cerrada'&&r.kind==='dibujo');const newC=nowClosed.find(r=>!p.closed.split(',').includes(String(r.id)));
+  if(newC&&newC.revealed_character)TVOV={type:'dibujo',c:newC.revealed_character,until:Date.now()+12000};
+  if(st.votes_revealed&&!p.vr){TVOV={type:'disfraz',until:Date.now()+20000};setTimeout(confetti,400)}
+  if(st.final_revealed&&!p.fr)startFinal();
+}
+function startFinal(){
+  const N=ranking().length;TVOV=null;TVANIM={type:'final',cd:3,n:0};renderTV();
+  const step=()=>{if(!TVANIM)return;if(TVANIM.cd>0)TVANIM.cd--;else if(TVANIM.n<N)TVANIM.n++;else{TVANIM=null;renderTV();return}
+   renderTV();if(TVANIM.cd===0&&TVANIM.n===N)confetti();setTimeout(step,TVANIM.cd>0?1000:(TVANIM.n===N?3500:(TVANIM.n>=N-3?1600:900)))};
+  setTimeout(step,1000);
+}
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const cv=$('#tvcf');if(!cv)return;const x=cv.getContext('2d');
+  const cols=['#e0a93b','#e5568a','#4a90e8','#2fbf8a','#9a8fee','#e8703a'];
+  const P=Array.from({length:180},()=>({x:Math.random()*1280,y:-20-Math.random()*400,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,s:8+Math.random()*10,c:cols[Math.random()*cols.length|0],r:Math.random()*6}));
+  let f=0;(function st(){const c=$('#tvcf');if(!c)return;const k=c.getContext('2d');k.clearRect(0,0,1280,720);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.12;k.save();k.translate(p.x,p.y);k.rotate(p.r);k.fillStyle=p.c;k.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);k.restore()});if(++f<260)requestAnimationFrame(st);else k.clearRect(0,0,1280,720)})();
+}
+
+/* ---------- Imprimir carteles ---------- */
+function printPage(){
+  const base=location.origin+location.pathname;
+  const cards=AQR.map(q=>{const qr=qrcode(0,'M');qr.addData(base+'?qr='+q.token);qr.make();
+    return `<div class="pc"><div class="pt">Misterio en casa de Lola</div>${qr.createSvgTag({cellSize:8,margin:2,scalable:true})}<div class="pn">${q.real_kind==='entrada'?'Escanea para entrar al caso':'Cartel '+q.num}</div><div class="pp">${esc(q.place)} · ${q.real_kind}</div></div>`}).join('');
+  const w=window.open('','_blank');
+  const html=`<!doctype html><html><head><meta charset="utf-8"><title>Carteles QR</title><style>body{font-family:Georgia,serif;margin:0}.pc{width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;page-break-after:always}.pc svg{width:70vmin;height:70vmin}.pt{font-size:28px}.pn{font-size:44px;font-weight:bold}.pp{font:12px monospace;color:#888}@media print{.pp{color:#bbb}}</style></head><body>${cards}<script>setTimeout(()=>print(),500)<\/script></body></html>`;
+  if(w){w.document.write(html);w.document.close()}else toast('Permite ventanas emergentes para imprimir',true);
+}
+
+/* ---------- Acciones ---------- */
+const ACT={
+ tab(d){TAB=d.v;if(d.v!=='tesoro'&&d.v!=='inicio')SCANRES=null;render();scrollTo(0,0)},
+ authMode(d){AUTH=d.v;AUTHERR='';render()},
+ closeScan(){SCANRES=null;render()},
+ async register(){
+  const n=$('#rg-name').value.trim(),c=$('#rg-cos').value.trim(),p=$('#rg-pin').value.trim(),spec=$('#rg-spec').checked;
+  if(!n){AUTHERR='Escribe tu nombre.';return render()}
+  if(!/^\d{4}$/.test(p)){AUTHERR='El PIN son 4 números.';return render()}
+  try{const g=await rpc('register',{p_name:n,p_costume:c,p_pin:p,p_role:spec?'espectador':'jugador'});ME={gid:g.id,pin:p};store.set('me',ME);AUTHERR='';TAB='inicio';await refresh();toast('Bienvenido, '+g.name)}catch(e){AUTHERR=errMsg(e);render()}
+ },
+ async login(){
+  const n=$('#lg-name').value.trim(),p=$('#lg-pin').value.trim();
+  try{const g=await rpc('login',{p_name:n,p_pin:p});ME={gid:g.id,pin:p};store.set('me',ME);AUTHERR='';TAB='inicio';await refresh()}catch(e){AUTHERR=errMsg(e);render()}
+ },
+ logout(){ME=null;store.del('me');AUTH='login';render()},
+ async vote(d){try{await rpc('vote',{p_gid:ME.gid,p_pin:ME.pin,p_round:+d.r,p_target:d.v});MYVOTE[d.r]=d.v;toast('Voto guardado');render()}catch(e){toast(errMsg(e),true)}},
+ async caja(){
+  const v=($('#caja-in').value||'').replace(/\D/g,'');
+  if(v.length!==6){CAJAMSG={t:'Escribe los 6 números.'};return render()}
+  try{const r=await rpc('try_caja',{p_gid:ME.gid,p_pin:ME.pin,p_code:v});
+   const M={abierta:'¡Se abrió! +6 puntos.',incorrecto:'Código incorrecto. Quedas bloqueado 15 minutos.',temprano:'Todavía no se puede abrir.',faltan_pistas:`Necesitas ${r.necesita} pistas y tienes ${r.tiene}.`,bloqueado:'Sigues bloqueado.',ya_abierta:'Alguien ya abrió la caja.',no_permitido:'No puedes abrir la caja.'};
+   CAJAMSG={t:M[r.status]||r.status,ok:r.status==='abierta',premio:r.premio};await refresh()}catch(e){toast(errMsg(e),true)}
+ },
+ async adminLogin(){const p=$('#ad-pin').value.trim();try{await rpc('admin_check',{p_admin:p});APIN=p;sstore.set('apin',p);await adminLoad();render()}catch(e){toast(errMsg(e),true)}},
+ adminOut(){APIN=null;sstore.set('apin','');render()},
+ aSec(d){ASEC=d.v;render();scrollTo(0,0)},
+ agNext(){const cur=curAgenda();const nx=nextAgenda(cur);if(!nx)return;const p=[];if(cur)p.push(A('admin_agenda_update',{p_id:cur.id,p_data:{status:'hecho'}}));Promise.all(p).then(()=>A('admin_state',{p_data:{current_agenda:nx.id}},nx.alexa?'Di: "'+nx.alexa+'"':'Bloque cambiado'))},
+ agPrev(){const cur=curAgenda();const i=cur?D.agenda.indexOf(cur):0;const pv=D.agenda[i-1];if(pv)A('admin_state',{p_data:{current_agenda:pv.id}})},
+ agAuto(){A('admin_state',{p_data:{current_agenda:null}},'Bloque automático por hora')},
+ agSet(d){A('admin_state',{p_data:{current_agenda:+d.v}},'Bloque cambiado')},
+ agShift(d){A('admin_agenda_shift',{p_from_ord:+d.v,p_delta:+d.d},'Horario movido')},
+ agSkip(d){const a=D.agenda.find(x=>x.id===+d.v);A('admin_agenda_update',{p_id:a.id,p_data:{status:a.status==='saltado'?'pendiente':'saltado'}})},
+ regToggle(){A('admin_state',{p_data:{reg_open:!D.state.reg_open}})},
+ ptG(d){APTS.g.has(d.v)?APTS.g.delete(d.v):APTS.g.add(d.v);render()},
+ ptCat(d){APTS.cat=d.v;render()},ptPts(d){APTS.pts=+d.v;render()},ptClear(){APTS.g.clear();render()},
+ async ptAdd(){const note=$('#pt-note').value.trim();await A('admin_points',{p_gids:[...APTS.g],p_cat:APTS.cat,p_pts:APTS.pts,p_note:note},'Puntos sumados');APTS.g.clear();render()},
+ async ptQuick(d){if(!APTS.g.size)return toast('Primero elige a quién',true);await A('admin_points',{p_gids:[...APTS.g],p_cat:d.c,p_pts:+d.p,p_note:d.n},d.n+' +'+d.p);APTS.g.clear();render()},
+ ptDel(d){A('admin_delete_point',{p_id:+d.v},'Anotación anulada')},
+ async resHit(){const t1=$('#h1').value,t2=$('#h2').value;if(t1===t2)return toast('Elige dos parejas distintas',true);const teams={};D.asg.filter(a=>a.block==='hitster').forEach(a=>(teams[a.team]=teams[a.team]||[]).push(a.guest_id));
+  await A('admin_points',{p_gids:teams[t1],p_cat:'hitster',p_pts:5,p_note:'Primera línea'});if(t2)await A('admin_points',{p_gids:teams[t2],p_cat:'hitster',p_pts:3,p_note:'Segunda línea'});
+  const rest=Object.entries(teams).filter(([k])=>k!==t1&&k!==t2).flatMap(([,v])=>v);if(rest.length)await A('admin_points',{p_gids:rest,p_cat:'hitster',p_pts:1,p_note:'Partida de Hitster'},'Partida anotada')},
+ async resJO(){const b=$('#jo-b').value,n=+$('#jo-n').value;const ids=groupOf(b,'Just One');if(!ids.length)return toast('Ese grupo no tiene jugadores',true);const p=n>=11?4:n>=8?3:n>=5?2:1;await A('admin_points',{p_gids:ids,p_cat:'justone',p_pts:p,p_note:n+' aciertos'},`+${p} para ${ids.length} personas`)},
+ async resBasta(){const v=[$('#b1').value,$('#b2').value,$('#b3').value];if(!v[0])return toast('Elige al menos el 1.º',true);if(new Set(v.filter(Boolean)).size!==v.filter(Boolean).length)return toast('No repitas personas',true);
+  const pts=[3,2,1];for(let i=0;i<3;i++)if(v[i])await A('admin_points',{p_gids:[v[i]],p_cat:'basta',p_pts:pts[i],p_note:(i+1)+'.º en Basta'});toast('Partida anotada')},
+ resG(d){AFORM.res=AFORM.res||new Set();AFORM.res.has(d.v)?AFORM.res.delete(d.v):AFORM.res.add(d.v);render()},
+ async resRes(){const w=[...AFORM.res];const l=players().map(g=>g.id).filter(id=>!AFORM.res.has(id));await A('admin_points',{p_gids:w,p_cat:'resistencia',p_pts:5,p_note:'Ganó La Resistencia'});if(l.length)await A('admin_points',{p_gids:l,p_cat:'resistencia',p_pts:1,p_note:'Jugó La Resistencia'},'Resistencia anotada');AFORM.res=new Set();render()},
+ drawHit(){const p=shuffle(players().map(g=>g.id));const t=[];for(let i=0;i<p.length;i+=2)t.push(p.slice(i,i+2));if(t.length>1&&t[t.length-1].length===1)t[t.length-2].push(t.pop()[0]);saveHit(t)},
+ hitLate(){const teams={};D.asg.filter(a=>a.block==='hitster').forEach(a=>(teams[a.team]=teams[a.team]||[]).push(a.guest_id));const arr=Object.keys(teams).sort((a,b)=>+a.split(' ')[1]-+b.split(' ')[1]).map(k=>teams[k]);const asg=new Set(arr.flat());players().filter(g=>!asg.has(g.id)).forEach(g=>{arr.sort((a,b)=>a.length-b.length)[0].push(g.id)});saveHit(arr)},
+ drawGrp(){const pl=players();const sm=shuffle(pl.filter(g=>g.smoker).map(g=>g.id));const ns=shuffle(pl.filter(g=>!g.smoker).map(g=>g.id));const n1=Math.floor(pl.length/2);const g1=sm.slice(0,n1);const rest=[...sm.slice(n1),...ns];while(g1.length<n1)g1.push(rest.shift());saveGroups(g1,rest)},
+ grpLate(){const g1=groupOf('rondaA','Just One'),g2=groupOf('rondaA','Basta');const asg=new Set([...g1,...g2]);players().filter(g=>!asg.has(g.id)).forEach(g=>(g1.length<=g2.length?g1:g2).push(g.id));saveGroups(g1,g2)},
+ async gAdd(){const n=$('#ng-name').value.trim(),c=$('#ng-cos').value.trim(),p=$('#ng-pin').value.trim();if(!n||!/^\d{4}$/.test(p))return toast('Nombre y PIN de 4 números',true);await A('admin_guest_add',{p_name:n,p_costume:c,p_pin:p,p_role:$('#ng-spec').checked?'espectador':'jugador'},n+' registrado')},
+ gUpd(d){const v=d.x==='true'?true:d.x==='false'?false:d.x;A('admin_guest_update',{p_gid:d.v,p_data:{[d.k]:v}})},
+ gPin(d){AFORM.pinFor=d.v;openModal(`<div class="card"><h3>Nuevo PIN para ${esc(gname(d.v))}</h3><input type="tel" id="mp" inputmode="numeric" maxlength="4"><div class="row"><button class="btn" data-act="gPinSave">Guardar</button><button class="btn ghost" data-act="modalClose">Cancelar</button></div></div>`)},
+ async gPinSave(){const p=$('#mp').value.trim();if(!/^\d{4}$/.test(p))return toast('4 números',true);closeModal();await A('admin_guest_update',{p_gid:AFORM.pinFor,p_data:{pin:p}},'PIN cambiado')},
+ gDel(d){openModal(`<div class="card"><h3>Quitar a ${esc(gname(d.v))}</h3><p class="mu">Desaparece de la lista, del marcador y de los grupos.</p><div class="row"><button class="btn bad" data-act="gDelOk" data-v="${d.v}">Quitar</button><button class="btn ghost" data-act="modalClose">Cancelar</button></div></div>`)},
+ async gDelOk(d){closeModal();await A('admin_guest_delete',{p_gid:d.v},'Invitado quitado')},
+ async rOpen(d){const r=await A('admin_round_open',{p_kind:d.v,p_label:''},'Votación abierta');if(d.v==='dibujo'&&r){ACHAR[r.id]=await rpc('admin_round_character',{p_admin:APIN,p_round:r.id});render()}},
+ rClose(d){A('admin_round_close',{p_round:+d.v},'Votación cerrada y puntos sumados')},
+ reveal1(){A('admin_state',{p_data:{votes_revealed:true}},'Mejor disfraz revelado en la TV')},
+ reveal2(){A('admin_state',{p_data:{final_revealed:true}},'Revelación final en la TV')},
+ unreveal(){A('admin_state',{p_data:{votes_revealed:false,final_revealed:false}},'Oculto de nuevo')},
+ qOn(d){A('admin_qr_activate',{p_qr:+d.v,p_minutes:+d.m},'Relámpago activo. Di: "Alexa, alerta"')},
+ qOff(d){A('admin_qr_off',{p_qr:+d.v},'Relámpago apagado')},
+ async prizeSave(){const v=$('#prize').value.trim();if(!v)return;ASECRETS=await A('admin_secrets',{p_data:{prize_location:v}},'Lugar guardado')},
+ cajaNow(){A('admin_state',{p_data:{caja_from:new Date().toISOString()}},'La caja ya se puede abrir')},
+ cajaFri(){A('admin_state',{p_data:{caja_from:'2026-10-30T23:30:00-03:00'}},'Caja desde las 23:30 del viernes')},
+ printQR(){printPage()},
+ async reset(){const c=$('#rs-c').value.trim();await A('admin_reset_all',{p_confirm:c},'Listo: todo desde cero');ALOG=[]},
+ async newPin(){const p=$('#np').value.trim();if(p.length<4)return toast('Mínimo 4 números',true);await A('admin_secrets',{p_data:{new_admin_pin:p}},'PIN cambiado');APIN=p;sstore.set('apin',p)},
+ modalClose(){closeModal()}
+};
+function openModal(h){const m=$('#modal');m.innerHTML=h;m.hidden=false}
+function closeModal(){$('#modal').hidden=true}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const f=ACT[b.dataset.act];if(f){e.preventDefault();Promise.resolve(f(b.dataset)).catch(()=>{})}});
+document.addEventListener('change',e=>{if(e.target.dataset.ch==='baRound'){AFORM.ba=e.target.value;render()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input')){const c=e.target.closest('.card');const b=c&&c.querySelector('.btn[data-act]');if(b&&!b.disabled)b.click()}});
+
+/* ---------- Ciclo ---------- */
+function render(){
+  if(!D.loaded)return;
+  const fe=document.activeElement;const fid=fe&&fe.id;const fv=fe&&fe.value;const keep={};
+  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(i=>{if(i.type!=='checkbox')keep[i.id]=i.value;else keep[i.id]=i.checked});
+  if(VIEW==='tv'){tvDetect();renderTV();return}
+  if(VIEW==='admin')renderAdmin();else renderGuest();
+  Object.entries(keep).forEach(([k,v])=>{const i=document.getElementById(k);if(!i)return;if(i.type==='checkbox')i.checked=v;else if(v!==''&&v!=null)i.value=v});
+  if(fid){const i=document.getElementById(fid);if(i){i.focus();try{if(fv!=null&&i.setSelectionRange&&i.type!=='number')i.setSelectionRange(fv.length,fv.length)}catch(e){}}}
+}
+function tick(){
+  if(!D.loaded)return;
+  if(VIEW==='tv'){const c=$('#tvclk');if(c)c.textContent=hm(Date.now());if(TVOV&&Date.now()>TVOV.until){TVOV=null;renderTV()}else if(TVOV&&TVOV.type==='alerta'&&Date.now()%15000<1000)renderTV();return}
+  document.querySelectorAll('[data-cd]').forEach(el=>{const m=Math.max(0,Math.ceil((+new Date(el.dataset.cd)-Date.now())/60000));el.textContent=m+' min'});
+}
+addEventListener('resize',()=>{if(VIEW==='tv')fitTV()});
+(async()=>{
+  $('#root').innerHTML='<div class="app"><div class="card"><p class="mu">Cargando la fiesta…</p></div></div>';
+  await refresh();
+  if(VIEW==='admin'&&APIN){await adminLoad();render()}
+  if(VIEW==='tv'){TVPREV=null;tvDetect();renderTV()}
+  subscribe();
+})();
+</script>
+</body>
+</html>
