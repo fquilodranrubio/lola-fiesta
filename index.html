@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Niver de Lola 🎂</title>
-<meta name="theme-color" content="#1d0e0a">
+<meta name="theme-color" content="#07160f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Lilita+One&display=swap">
 <style>
 :root{color-scheme:dark;
---bg:#1d0e0a;--sf:#2a1410;--sf2:#3a1c15;--line:#5e2e20;--tx:#fff2e4;--mu:#d6aa97;--ac:#ff8a24;--acink:#2b1100;--hot:#ff4a3d;--hotink:#2d0705;--ok:#3dbe8b;--bad:#ef6b6b;
---c-hitster:#4a90e8;--c-justone:#2fbf8a;--c-basta:#e8ae1f;--c-dibujo:#e87ba4;--c-tesoro:#9a8fee;--c-extras:#5cc46a;--c-disfraz:#e5568a;--c-otro:#d9d4e6;
+--bg:#07160f;--sf:#0f2a1d;--sf2:#173b29;--line:#2a6a4a;--tx:#f0fff6;--mu:#9fd1b6;--ac:#ff3ea5;--acink:#2a0017;--hot:#35e08c;--hotink:#04210f;--ok:#5ff0a8;--bad:#ff7a7a;
+--c-hitster:#4aa8ff;--c-justone:#2fe08a;--c-basta:#ffc83d;--c-dibujo:#ff9ad0;--c-tesoro:#a58bff;--c-extras:#ff9a4a;--c-disfraz:#ff2e9a;--c-otro:#d9d4e6;
 --f-disp:'Lilita One',Georgia,serif;--f-body:'Figtree',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace}
 *{box-sizing:border-box}
-body{background:radial-gradient(ellipse at 50% -10%,#5a1d0f 0,var(--bg) 60%) fixed,var(--bg)}
-.card.hl{background:linear-gradient(155deg,#431a10,var(--sf))}
-.brand{text-shadow:0 2px 0 #7a2410}
+body{background:radial-gradient(ellipse at 50% -10%,#0f5a37 0,var(--bg) 60%) fixed,var(--bg)}
+.card.hl{background:linear-gradient(155deg,#14452f,var(--sf))}
+.brand{text-shadow:0 2px 0 #7a0f48}
 html,body{margin:0;background-color:var(--bg);color:var(--tx)}
 body{font:400 15px/1.5 var(--f-body);padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 body.tvmode{padding:0;overflow:hidden;height:100vh}
@@ -71,7 +71,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ac);outline:0}
 .li.done{opacity:.55}
 .li.skip b{text-decoration:line-through}
 .pick{display:flex;width:100%;text-align:left;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;min-height:48px}
-.pick.on{border-color:var(--ac);background:#3a1f0d}
+.pick.on{border-color:var(--ac);background:#3a1233}
 .pick small{color:var(--mu);display:block;line-height:1.2}
 details{border-top:1px solid var(--line);padding:10px 0}
 details:first-of-type{border-top:0}
@@ -115,7 +115,7 @@ details p{color:var(--mu);margin-top:6px;font-size:14px}
 .kbd{font:500 13px var(--f-mono);background:var(--sf2);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
 .note{font-size:12px;color:var(--mu);text-align:center}
 /* TV */
-.tvwrap{position:fixed;inset:0;background:radial-gradient(ellipse at 50% -10%,#5a1d0f 0,#1d0e0a 65%)}
+.tvwrap{position:fixed;inset:0;background:radial-gradient(ellipse at 50% -10%,#0f5a37 0,#07160f 65%)}
 .tvstage{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;display:flex;flex-direction:column;overflow:hidden}
 .tvh{height:76px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--line)}
 .tvlogo{font:400 32px var(--f-disp);color:var(--ac)}
@@ -134,7 +134,7 @@ details p{color:var(--mu);margin-top:6px;font-size:14px}
 .tvstage .bbar{height:24px}.tvstage .bt{font-size:28px}.tvstage .brow .rk{font-size:18px}
 .tvstage .legend{font-size:14px}
 .tvstrip{flex:none;height:40px;background:var(--hot);color:var(--hotink);font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;gap:10px}
-.tvov{position:absolute;inset:0;background:rgba(14,11,21,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;z-index:5}
+.tvov{position:absolute;inset:0;background:rgba(5,20,13,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;z-index:5}
 .tvov .h{font:400 84px/1 var(--f-disp);color:var(--ac)}
 .tvov .s{font-size:30px}
 .tvov .n{font:500 120px/1 var(--f-mono);color:var(--hot)}
@@ -151,12 +151,12 @@ details p{color:var(--mu);margin-top:6px;font-size:14px}
 .tabs button .te{display:block;font-size:18px;line-height:1.25}
 .lg svg{width:30px;height:30px;vertical-align:-8px;margin-right:8px}
 .lg.tv svg{width:50px;height:50px;vertical-align:-12px;margin-right:12px}
-#trans{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#ff8a24,#e8402f 70%);opacity:0;pointer-events:none;transition:opacity .22s}
+#trans{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#ff7cc4 0,#ff3ea5 45%,#b8146f 100%);opacity:0;pointer-events:none;transition:opacity .22s}
 #trans.on{opacity:1;pointer-events:auto}
 #trans.off{opacity:0;pointer-events:none}
 .tbox{text-align:center;color:#fff;animation:tbob .5s ease-in-out infinite alternate}
 .tbox svg{width:150px;height:150px;filter:drop-shadow(0 6px 0 #0003)}
-.tbox p{font:400 28px var(--f-disp);margin-top:8px;text-shadow:0 2px 0 #7a2410}
+.tbox p{font:400 28px var(--f-disp);margin-top:8px;text-shadow:0 2px 0 #7a0f48}
 @keyframes tbob{from{transform:translateY(6px) rotate(-3deg)}to{transform:translateY(-8px) rotate(3deg)}}
 .tvov .ill svg{width:200px;height:200px;animation:tbob .6s ease-in-out infinite alternate}
 @media(prefers-reduced-motion:reduce){.tbox,.tvov .ill svg{animation:none}}
@@ -300,7 +300,7 @@ function authView(){
   const reg=AUTH==='reg';const open=D.state.reg_open;
   const pend=store.get('pendingQR');
   return `<div class="app"><div class="card hl" style="gap:14px">
-  <div class="brand" style="font-size:32px"><span class="lg">${illus("chi")}</span>Niver de Lola 🎂<small>38 añitos · viernes 30 de octubre</small></div>
+  <div class="brand" style="font-size:32px"><span class="lg">${illus("chi")}</span>Niver de Lola 🎂<small>Viernes 30 de octubre</small></div>
   <p class="mu">¡Bienvenido al niver de Lola! 🎉 Regístrate, caza los carteles QR 🗝️, juega en las mesas 🎲 y suma puntos toda la noche. Tu disfraz 👗 también cuenta.</p>
   ${pend?`<div class="alertb">${ic('qr')}<div>Encontraste un cartel<br><span>Regístrate o entra y la pista quedará guardada.</span></div></div>`:''}
   <div class="tabs" style="position:static"><button class="${reg?'on':''}" data-act="authMode" data-v="reg">Registrarme</button><button class="${reg?'':'on'}" data-act="authMode" data-v="login">Ya me registré</button></div>
@@ -373,7 +373,7 @@ const RULES=[
  ['basta','✋ Basta','Sale una categoría (por ejemplo, comidas). Por turnos, cada persona dice una palabra que empiece con una letra todavía libre y aprieta esa letra. Quien no alcanza a decirla antes de que se acabe el tiempo queda fuera. Fernando explica la ruleta al empezar.','Se juegan varias partidas durante la noche. En cada una: 1.º gana 3 pts, 2.º gana 2 pts y 3.º gana 1 pt. Los puntos de todas tus partidas se suman.'],
  ['dibujo','🎨 Dibujo a ciegas','Una persona recibe en su celular un personaje secreto y lo describe, sin decir su nombre. El resto dibuja siguiendo solo esas instrucciones, sin ver nada. Al final todos muestran su dibujo y se vota en la app el más parecido. Son 3 rondas, con un descriptor distinto cada vez.','Los 3 dibujos más votados ganan 3, 2 y 1 pt. Quien describe suma 2 pts. No puedes votar por ti.'],
  ['disfraz','👗 Desfile y mejor disfraz','Cada persona pasa con su disfraz por la barra del living. Pasar no da puntos. Después votas en secreto en la app por el mejor disfraz, y no puedes votarte. El resultado queda oculto hasta la revelación final.','1.º gana 5 pts, 2.º gana 3 pts y 3.º gana 1 pt.'],
- ['tesoro','🗝️ Encuentra el Tesoro','Hay carteles QR escondidos por toda la casa, y uno lo lleva Román. Escanéalos con la cámara del celular: cada uno guarda una pista del código secreto de 6 números. Compartir pistas está permitido. Algunas pistas son falsas, hay carteles trampa y retos. Los carteles relámpago funcionan solo un rato: te avisa una alerta en el celular y en la TV. Con las pistas armas el código y lo pruebas en la caja, en la pestaña Tesoro.','Primero en encontrar un cartel: +1 pt (relámpago: +2). Trampa: −2 pts. La caja se puede probar desde las 22:50 hasta la revelación, con al menos 4 pistas encontradas. Abrirla da +6 pts. Si te equivocas, quedas bloqueado 15 minutos.'],
+ ['tesoro','🗝️ Encuentra el Tesoro','Hay carteles QR escondidos por toda la casa, y uno lo lleva Román. Escanéalos con la cámara del celular: cada uno guarda una pista del código secreto de 6 números. Compartir pistas está permitido. Algunas pistas son falsas, hay carteles trampa y retos. Los carteles relámpago funcionan solo un rato: te avisa una alerta en el celular y en la TV. Con las pistas armas el código y lo pruebas en la caja, en la pestaña Tesoro.','Primero en encontrar un cartel: +1 pt (relámpago: +2). Trampa: −2 pts. La caja se puede probar desde las 22:35 hasta la revelación, con al menos 4 pistas encontradas. Abrirla da +6 pts. Si te equivocas, quedas bloqueado 15 minutos.'],
  ['extras','⭐ Puntos extra','Fernando los da cuando alguien se luce o juega limpio durante la noche.','Mejor actuación del disfraz: +2 pts. Espíritu deportivo: +2 pts. Comodín de Lola: +3 pts.']];
 function guestJuegos(){
   return `<div class="card"><h3>📖 Reglas y puntos</h3>${RULES.map(r=>`<details><summary><i class="dot" style="background:${catColor(r[0])}"></i>${r[1]}</summary><p><b>Cómo se juega:</b> ${r[2]}</p><p><b>Puntos:</b> ${r[3]}</p></details>`).join('')}</div><div class="card"><h3>🙋 Con quién hablar</h3><p class="mu">Fernando es el árbitro. Él anota los puntos de las mesas y resuelve dudas.</p></div>`;
@@ -411,7 +411,7 @@ function renderGuest(){
   const g=D.guests.find(x=>x.id===ME.gid);if(!g){root.innerHTML=authView();return}
   const T=[['inicio','🏠 Inicio'],['programa','📅 Programa'],['juegos','📖 Reglas'],['marcador','🏆 Marcador'],['tesoro','🗝️ Tesoro']];
   const body={inicio:guestInicio,programa:guestPrograma,juegos:guestJuegos,marcador:guestMarcador,tesoro:guestTesoro}[TAB](g);
-  root.innerHTML=`<div class="app"><header class="top"><div class="brand"><span class="lg">${illus("chi")}</span>Niver de Lola<small>38 añitos 🎂</small></div><div class="who"><div><b>${esc(g.name)}</b><small>${esc(g.costume)}</small></div><div class="av">${esc(g.name[0]||'?')}</div></div></header>
+  root.innerHTML=`<div class="app"><header class="top"><div class="brand"><span class="lg">${illus("chi")}</span>Niver de Lola<small>Fiesta de cumpleaños 🎂</small></div><div class="who"><div><b>${esc(g.name)}</b><small>${esc(g.costume)}</small></div><div class="av">${esc(g.name[0]||'?')}</div></div></header>
   <nav class="tabs" aria-label="Secciones">${T.map(t=>`<button class="${TAB===t[0]?'on':''}" data-act="tab" data-v="${t[0]}"><span class="te">${t[1].split(' ')[0]}</span>${t[1].split(' ')[1]}</button>`).join('')}</nav>${body}
   <p class="note" style="text-align:center">Con cariño de Santos a Santiago 🇧🇷💛 · Román 🐶 supervisa desde algún rincón</p><p class="note">${esc(g.name)} · <button class="x" data-act="logout">Salir de este celular</button></p></div>`;
 }
@@ -425,7 +425,7 @@ async function adminLoad(){
   }catch(e){if(errMsg(e)===ERR.admin_pin_incorrecto){APIN=null;sstore.set('apin','')}toast(errMsg(e),true)}
 }
 async function A(fn,args,ok){try{const r=await rpc(fn,Object.assign({p_admin:APIN},args||{}));if(ok)toast(ok);await load();await adminLoad();render();return r}catch(e){toast(errMsg(e),true);throw e}}
-function adminLogin(){return `<div class="app"><div class="card hl"><div class="brand">Árbitro<small>Niver de Lola · 38</small></div><div class="fld"><label for="ad-pin">PIN de árbitro</label><input type="password" id="ad-pin" inputmode="numeric" maxlength="8" autocomplete="off"></div><button class="btn full" data-act="adminLogin">Entrar</button></div></div>`}
+function adminLogin(){return `<div class="app"><div class="card hl"><div class="brand">Árbitro<small>Niver de Lola</small></div><div class="fld"><label for="ad-pin">PIN de árbitro</label><input type="password" id="ad-pin" inputmode="numeric" maxlength="8" autocomplete="off"></div><button class="btn full" data-act="adminLogin">Entrar</button></div></div>`}
 function gChips(sel,act,list){return `<div class="sel">${(list||players()).map(g=>`<button class="chip ${sel.has(g.id)?'on':''}" data-act="${act}" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</div>`}
 function groupOf(block,game){return D.asg.filter(a=>a.block===block&&(!game||a.game===game)).map(a=>a.guest_id)}
 function adminAhora(){
@@ -494,7 +494,7 @@ function adminTesoro(){
   <p class="mu" style="font-size:12px">Al activar un relámpago, la TV y los celulares muestran la alerta. Di <span class="kbd">"Alexa, alerta"</span>.</p></div>
   <div class="card"><h3>La caja</h3><p>${st.caja_winner?`Abierta por <b>${esc(gname(st.caja_winner))}</b> a las ${hm(st.caja_opened_at)}.`:`Cerrada. Se abre desde las ${hm(st.caja_from)}.`}</p>
   <div class="fld"><label for="prize">Dónde está escondido el premio (lo ve quien abre la caja)</label><input type="text" id="prize" maxlength="120" placeholder="${ASECRETS?esc(ASECRETS.prize_location):'Por ejemplo: dentro del microondas'}"></div><button class="btn ghost sm" data-act="prizeSave">Guardar lugar</button>
-  <div class="row"><button class="btn ghost sm" data-act="cajaNow">Permitir abrir la caja ahora</button><button class="btn ghost sm" data-act="cajaFri">Volver a las 22:50 del viernes</button></div></div>
+  <div class="row"><button class="btn ghost sm" data-act="cajaNow">Permitir abrir la caja ahora</button><button class="btn ghost sm" data-act="cajaFri">Volver a las 22:35 del viernes</button></div></div>
   <div class="card"><h3>Imprimir carteles</h3><p class="mu" style="font-size:13px">Abre una página con los 13 carteles listos para imprimir.</p><button class="btn ghost" data-act="printQR">Ver carteles para imprimir</button></div>`;
 }
 function adminSistema(){
@@ -508,7 +508,7 @@ function renderAdmin(){
   if(!APIN){$('#root').innerHTML=adminLogin();return}
   const S=[['ahora','Ahora'],['puntos','Puntos'],['grupos','Grupos'],['votos','Votaciones'],['tesoro','Tesoro'],['invitados','Invitados'],['sistema','Sistema']];
   const body={ahora:adminAhora,puntos:adminPuntos,grupos:adminGrupos,votos:adminVotos,tesoro:adminTesoro,invitados:adminInvitados,sistema:adminSistema}[ASEC]();
-  $('#root').innerHTML=`<div class="app adm"><header class="top"><div class="brand">Árbitro<small>Niver de Lola · 38</small></div><div class="who"><div><b>Fernando</b><small>${players().length} jugadores</small></div><div class="av" style="background:var(--ac);color:var(--acink)">F</div></div></header><nav class="tabs">${S.map(s=>`<button class="${ASEC===s[0]?'on':''}" data-act="aSec" data-v="${s[0]}">${s[1]}</button>`).join('')}</nav>${body}</div>`;
+  $('#root').innerHTML=`<div class="app adm"><header class="top"><div class="brand">Árbitro<small>Niver de Lola</small></div><div class="who"><div><b>Fernando</b><small>${players().length} jugadores</small></div><div class="av" style="background:var(--ac);color:var(--acink)">F</div></div></header><nav class="tabs">${S.map(s=>`<button class="${ASEC===s[0]?'on':''}" data-act="aSec" data-v="${s[0]}">${s[1]}</button>`).join('')}</nav>${body}</div>`;
 }
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
 function groupRows(g1,g2){
@@ -554,7 +554,7 @@ function tvHTML(){
     if(TVOV.type==='disfraz')ov=disfrazOv();
     if(TVOV.type==='dibujo')ov=`<div class="tvov"><div class="s">El personaje era</div><div class="h">${esc(TVOV.c)}</div></div>`;
   }
-  return `<div class="tvh"><div class="tvlogo"><span class="lg tv">${illus("chi")}</span>Niver de Lola 🎂</div><div class="tvclk" id="tvclk">${hm(Date.now())}</div><div class="tvmeta">${N} jugadores<br>Lola cumple 38 🎂 · de Santos a Santiago 🇧🇷</div></div><div class="tvm"><section class="tvl">${left}</section><aside class="tvr">${right}</aside></div>${strip}${ov}<canvas class="tvcf" id="tvcf" width="1280" height="720"></canvas>`;
+  return `<div class="tvh"><div class="tvlogo"><span class="lg tv">${illus("chi")}</span>Niver de Lola 🎂</div><div class="tvclk" id="tvclk">${hm(Date.now())}</div><div class="tvmeta">${N} jugadores<br>Cumple de Lola 🎂 · de Santos a Santiago 🇧🇷</div></div><div class="tvm"><section class="tvl">${left}</section><aside class="tvr">${right}</aside></div>${strip}${ov}<canvas class="tvcf" id="tvcf" width="1280" height="720"></canvas>`;
 }
 function tvCaja(){
   const st=D.state,now=Date.now(),from=+new Date(st.caja_from);let h='';
@@ -603,7 +603,7 @@ function startFinal(){
 function confetti(){
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   const cv=$('#tvcf');if(!cv)return;const x=cv.getContext('2d');
-  const cols=['#ff8a24','#ff4a3d','#ffd166','#fff2e4','#ff6f91','#e8703a'];
+  const cols=['#ff3ea5','#35e08c','#ffd166','#f0fff6','#ff9ad0','#18b870'];
   const P=Array.from({length:180},()=>({x:Math.random()*1280,y:-20-Math.random()*400,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,s:8+Math.random()*10,c:cols[Math.random()*cols.length|0],r:Math.random()*6}));
   let f=0;(function st(){const c=$('#tvcf');if(!c)return;const k=c.getContext('2d');k.clearRect(0,0,1280,720);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.12;k.save();k.translate(p.x,p.y);k.rotate(p.r);k.fillStyle=p.c;k.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);k.restore()});if(++f<260)requestAnimationFrame(st);else k.clearRect(0,0,1280,720)})();
 }
@@ -682,7 +682,7 @@ const ACT={
  qOff(d){A('admin_qr_off',{p_qr:+d.v},'Relámpago apagado')},
  async prizeSave(){const v=$('#prize').value.trim();if(!v)return;ASECRETS=await A('admin_secrets',{p_data:{prize_location:v}},'Lugar guardado')},
  cajaNow(){A('admin_state',{p_data:{caja_from:new Date().toISOString()}},'La caja ya se puede abrir')},
- cajaFri(){A('admin_state',{p_data:{caja_from:'2026-10-30T22:50:00-03:00'}},'Caja desde las 22:50 del viernes')},
+ cajaFri(){A('admin_state',{p_data:{caja_from:'2026-10-30T22:35:00-03:00'}},'Caja desde las 22:35 del viernes')},
  printQR(){printPage()},
  async reset(){const c=$('#rs-c').value.trim();await A('admin_reset_all',{p_confirm:c},'Listo: todo desde cero');ALOG=[]},
  async newPin(){const p=$('#np').value.trim();if(p.length<4)return toast('Mínimo 4 números',true);await A('admin_secrets',{p_data:{new_admin_pin:p}},'PIN cambiado');APIN=p;sstore.set('apin',p)},
