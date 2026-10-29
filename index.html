@@ -355,6 +355,7 @@ function guestTesoro(g){
   if(st.caja_winner)caja=`<p>${ic('key')} Abierta por <b>${esc(gname(st.caja_winner))}</b>.</p>${st.caja_winner===g.id&&CAJAMSG&&CAJAMSG.premio?`<div class="clue"><small>El tesoro está en</small>${esc(CAJAMSG.premio)}</div>`:''}`;
   else if(g.no_caja)caja=`<p class="mu">Eres a quien le robaron el tesoro: puedes buscar pistas y sumar puntos, pero no abrir la caja.</p>`;
   else if(g.role!=='jugador')caja=`<p class="mu">Solo los jugadores pueden abrir la caja.</p>`;
+  else if(st.votes_revealed||st.final_revealed)caja=`<p class="mu">Se acabó el tiempo: nadie abrió la caja. Fernando revela el código en la premiación.</p>`;
   else caja=`<p class="mu" style="font-size:14px">Código de 8 números. ${early?`Se abre desde las <b>${hm(st.caja_from)}</b>.`:'Ya se puede abrir.'} Necesitas ${st.caja_min_finds} pistas (tienes ${pistas.length}). Un intento fallido te bloquea 15 minutos.</p>
    <div class="row"><input type="tel" id="caja-in" inputmode="numeric" maxlength="8" placeholder="00000000" style="width:190px;font:500 22px var(--f-mono);text-align:center;letter-spacing:.15em" ${locked||early?'disabled':''}><button class="btn" data-act="caja" ${locked||early?'disabled':''}>Probar</button></div>${locked?`<p class="err">Bloqueado hasta las ${hm(lockUntil)}.</p>`:''}`;
   if(CAJAMSG&&CAJAMSG.t)caja+=`<p class="${CAJAMSG.ok?'okt':'err'}">${esc(CAJAMSG.t)}</p>`;
@@ -583,7 +584,7 @@ const ACT={
   const v=($('#caja-in').value||'').replace(/\D/g,'');
   if(v.length!==8){CAJAMSG={t:'Escribe los 8 números.'};return render()}
   try{const r=await rpc('try_caja',{p_gid:ME.gid,p_pin:ME.pin,p_code:v});
-   const M={abierta:'¡Se abrió! +6 puntos.',incorrecto:'Código incorrecto. Quedas bloqueado 15 minutos.',temprano:'Todavía no se puede abrir.',faltan_pistas:`Necesitas ${r.necesita} pistas y tienes ${r.tiene}.`,bloqueado:'Sigues bloqueado.',ya_abierta:'Alguien ya abrió la caja.',no_permitido:'No puedes abrir la caja.'};
+   const M={abierta:'¡Se abrió! +6 puntos.',incorrecto:'Código incorrecto. Quedas bloqueado 15 minutos.',temprano:'Todavía no se puede abrir.',faltan_pistas:`Necesitas ${r.necesita} pistas y tienes ${r.tiene}.`,bloqueado:'Sigues bloqueado.',ya_abierta:'Alguien ya abrió la caja.',tiempo:'Se acabó el tiempo: ya empezó la revelación.',no_permitido:'No puedes abrir la caja.'};
    CAJAMSG={t:M[r.status]||r.status,ok:r.status==='abierta',premio:r.premio};await refresh()}catch(e){toast(errMsg(e),true)}
  },
  async adminLogin(){const p=$('#ad-pin').value.trim();try{await rpc('admin_check',{p_admin:p});APIN=p;sstore.set('apin',p);await adminLoad();render()}catch(e){toast(errMsg(e),true)}},
