@@ -356,8 +356,8 @@ function guestTesoro(g){
   else if(g.no_caja)caja=`<p class="mu">Eres a quien le robaron el tesoro: puedes buscar pistas y sumar puntos, pero no abrir la caja.</p>`;
   else if(g.role!=='jugador')caja=`<p class="mu">Solo los jugadores pueden abrir la caja.</p>`;
   else if(st.votes_revealed||st.final_revealed)caja=`<p class="mu">Se acabó el tiempo: nadie abrió la caja. Fernando revela el código en la premiación.</p>`;
-  else caja=`<p class="mu" style="font-size:14px">Código de 8 números. ${early?`Se abre desde las <b>${hm(st.caja_from)}</b>.`:'Ya se puede abrir.'} Necesitas ${st.caja_min_finds} pistas (tienes ${pistas.length}). Un intento fallido te bloquea 15 minutos.</p>
-   <div class="row"><input type="tel" id="caja-in" inputmode="numeric" maxlength="8" placeholder="00000000" style="width:190px;font:500 22px var(--f-mono);text-align:center;letter-spacing:.15em" ${locked||early?'disabled':''}><button class="btn" data-act="caja" ${locked||early?'disabled':''}>Probar</button></div>${locked?`<p class="err">Bloqueado hasta las ${hm(lockUntil)}.</p>`:''}`;
+  else caja=`<p class="mu" style="font-size:14px">Código de 6 números. ${early?`Se abre desde las <b>${hm(st.caja_from)}</b>.`:'Ya se puede abrir.'} Necesitas ${st.caja_min_finds} pistas (tienes ${pistas.length}). Un intento fallido te bloquea 15 minutos.</p>
+   <div class="row"><input type="tel" id="caja-in" inputmode="numeric" maxlength="6" placeholder="000000" style="width:170px;font:500 22px var(--f-mono);text-align:center;letter-spacing:.15em" ${locked||early?'disabled':''}><button class="btn" data-act="caja" ${locked||early?'disabled':''}>Probar</button></div>${locked?`<p class="err">Bloqueado hasta las ${hm(lockUntil)}.</p>`:''}`;
   if(CAJAMSG&&CAJAMSG.t)caja+=`<p class="${CAJAMSG.ok?'okt':'err'}">${esc(CAJAMSG.t)}</p>`;
   h+=`<div class="card ${st.caja_winner?'':'hl'}"><h3>La caja del tesoro</h3>${caja}</div>`;
   h+=`<div class="card"><h3>Tus pistas (${pistas.length})</h3>${pistas.length?pistas.map(c=>`<div class="clue"><small>Cartel ${c.num}${c.first?' · encontrado primero por ti':''}</small>${esc(c.clue)}</div>`).join(''):'<p class="mu">Aún no escaneas carteles. Búscalos por toda la casa y apúntales con la cámara del celular.</p>'}</div>`;
@@ -502,7 +502,7 @@ function tvHTML(){
   if(nx)right+=`<div class="tvc"><h3>Después</h3><p><b>${hm(agTime(nx))}</b> · ${esc(nx.title)}</p></div>`;
   if(st.final_revealed&&rk[0]&&!(TVANIM&&TVANIM.type==='final'))right=`<div class="tvc" style="border-color:var(--ac)"><h3>Ganador de la noche</h3><div class="v" style="font-size:42px">${esc(rk[0].g.name)}</div><p>${esc(rk[0].g.costume)} · ${rk[0].t} puntos</p></div>`+right;
   const found=D.qrs.filter(q=>q.kind!=='entrada'&&q.first_guest).length;const tot=D.qrs.filter(q=>q.kind!=='entrada').length;
-  right+=`<div class="tvc"><h3>El Gran Robo</h3><p>Carteles encontrados: <b>${found} de ${tot}</b></p><p>${st.caja_winner?`Caja abierta por <b>${esc(gname(st.caja_winner))}</b>`:'La caja sigue cerrada'}</p></div>`;
+  right+=`<div class="tvc"><h3>El Gran Robo</h3><p style="font-size:16px">Carteles encontrados: <b>${found} de ${tot}</b></p>${tvCaja()}</div>`;
   const last=D.log.filter(l=>!l.hidden).slice(-3).reverse();
   if(last.length&&!st.final_revealed)right+=`<div class="tvc"><h3>Últimas jugadas</h3>${last.map(l=>`<p style="font-size:16px"><b class="mono" style="color:${catColor(l.cat)}">${l.pts>0?'+':''}${l.pts}</b> ${esc(gname(l.guest_id))} <span class="mu">${catName(l.cat)}</span></p>`).join('')}</div>`;
   const vr=D.rounds.find(r=>r.status==='abierta');
@@ -515,6 +515,20 @@ function tvHTML(){
     if(TVOV.type==='dibujo')ov=`<div class="tvov"><div class="s">El personaje era</div><div class="h">${esc(TVOV.c)}</div></div>`;
   }
   return `<div class="tvh"><div class="tvlogo">Misterio en casa de Lola</div><div class="tvclk" id="tvclk">${hm(Date.now())}</div><div class="tvmeta">${N} detectives<br>Lola cumple 38</div></div><div class="tvm"><section class="tvl">${left}</section><aside class="tvr">${right}</aside></div>${strip}${ov}<canvas class="tvcf" id="tvcf" width="1280" height="720"></canvas>`;
+}
+function tvCaja(){
+  const st=D.state,now=Date.now(),from=+new Date(st.caja_from);let h='';
+  if(st.caja_winner)h=`<p style="font-size:16px">${ic('key')} Caja abierta por <b>${esc(gname(st.caja_winner))}</b></p>`;
+  else if(st.votes_revealed||st.final_revealed)h=`<p class="mu" style="font-size:16px">Caja cerrada: nadie acertó la clave</p>`;
+  else if(now<from)h=`<p style="font-size:16px">Podrás probar la clave desde las <b class="mono">${hm(from)}</b></p>`;
+  else h=`<p style="font-size:16px"><b>Ya se puede probar la clave</b><br><span class="mu">Cierra en la revelación</span></p>`;
+  const seen={};const rows=[];
+  D.att.slice().sort((a,b)=>new Date(b.at)-new Date(a.at)).forEach(a=>{if(seen[a.guest_id]||now-new Date(a.at)>90*60000)return;seen[a.guest_id]=1;rows.push(a)});
+  if(!st.caja_winner&&now>=from&&!(st.votes_revealed||st.final_revealed)){
+    h+=rows.length?rows.slice(0,4).map(a=>{const until=+new Date(a.at)+15*60000;const bl=!a.ok&&now<until;
+      return `<p style="font-size:15px">${esc(gname(a.guest_id))} ${bl?`<span class="badge bad">bloqueado hasta ${hm(until)}</span>`:a.ok?'<span class="badge">acertó</span>':`<span class="badge">falló · ya puede reintentar</span>`}</p>`}).join(''):`<p class="mu" style="font-size:15px">Aún nadie ha probado la clave</p>`;
+  }
+  return h;
 }
 function disfrazOv(){
   const by={};D.log.filter(l=>l.cat==='disfraz').forEach(l=>by[l.guest_id]=(by[l.guest_id]||0)+l.pts);
@@ -582,7 +596,7 @@ const ACT={
  async vote(d){try{await rpc('vote',{p_gid:ME.gid,p_pin:ME.pin,p_round:+d.r,p_target:d.v});MYVOTE[d.r]=d.v;toast('Voto guardado');render()}catch(e){toast(errMsg(e),true)}},
  async caja(){
   const v=($('#caja-in').value||'').replace(/\D/g,'');
-  if(v.length!==8){CAJAMSG={t:'Escribe los 8 números.'};return render()}
+  if(v.length!==6){CAJAMSG={t:'Escribe los 6 números.'};return render()}
   try{const r=await rpc('try_caja',{p_gid:ME.gid,p_pin:ME.pin,p_code:v});
    const M={abierta:'¡Se abrió! +6 puntos.',incorrecto:'Código incorrecto. Quedas bloqueado 15 minutos.',temprano:'Todavía no se puede abrir.',faltan_pistas:`Necesitas ${r.necesita} pistas y tienes ${r.tiene}.`,bloqueado:'Sigues bloqueado.',ya_abierta:'Alguien ya abrió la caja.',tiempo:'Se acabó el tiempo: ya empezó la revelación.',no_permitido:'No puedes abrir la caja.'};
    CAJAMSG={t:M[r.status]||r.status,ok:r.status==='abierta',premio:r.premio};await refresh()}catch(e){toast(errMsg(e),true)}
@@ -651,7 +665,7 @@ function render(){
 }
 function tick(){
   if(!D.loaded)return;
-  if(VIEW==='tv'){const c=$('#tvclk');if(c)c.textContent=hm(Date.now());if(TVOV&&Date.now()>TVOV.until){TVOV=null;renderTV()}else if(TVOV&&TVOV.type==='alerta'&&Date.now()%15000<1000)renderTV();return}
+  if(VIEW==='tv'){const c=$('#tvclk');if(c)c.textContent=hm(Date.now());if(TVOV&&Date.now()>TVOV.until){TVOV=null;renderTV()}else if(((TVOV&&TVOV.type==='alerta')||(!TVOV&&!TVANIM))&&Date.now()%15000<1000)renderTV();return}
   document.querySelectorAll('[data-cd]').forEach(el=>{const m=Math.max(0,Math.ceil((+new Date(el.dataset.cd)-Date.now())/60000));el.textContent=m+' min'});
 }
 addEventListener('resize',()=>{if(VIEW==='tv')fitTV()});
