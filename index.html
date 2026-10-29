@@ -151,8 +151,8 @@ details p{color:var(--mu);margin-top:6px;font-size:14px}
 .tabs button .te{display:block;font-size:18px;line-height:1.25}
 .lg svg{width:30px;height:30px;vertical-align:-8px;margin-right:8px}
 .lg.tv svg{width:50px;height:50px;vertical-align:-12px;margin-right:12px}
-#trans{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#ff7cc4 0,#ff3ea5 45%,#b8146f 100%);opacity:0;pointer-events:none;transition:opacity .22s}
-#trans.on{opacity:1;pointer-events:auto}
+#trans{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#ff7cc4 0,#ff3ea5 45%,#b8146f 100%);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s,visibility 0s .22s}
+#trans.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s}
 #trans.off{opacity:0;pointer-events:none}
 .tbox{text-align:center;color:#fff;animation:tbob .5s ease-in-out infinite alternate}
 .tbox svg{width:150px;height:150px;filter:drop-shadow(0 6px 0 #0003)}
@@ -197,7 +197,6 @@ const ILK=Object.keys(ILL);let ILI=Math.floor(Math.random()*ILK.length);
 const illus=k=>ILL[k]||ILL.chi;
 const AIL={llegada:'chi',hitster:'cam',rondaA:'ramen',rondaB:'salmon',sushi:'sushi',cumple:'chi',dibujo:'cam',desfile:'pole',revelacion:'cam',premiacion:'pole'};
 function transition(cb){
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches){cb();return}
   let el=document.getElementById('trans');if(!el){el=document.createElement('div');el.id='trans';el.setAttribute('aria-hidden','true');document.body.appendChild(el)}
   const k=ILK[ILI++%ILK.length];
   el.innerHTML=`<div class="tbox">${ILL[k]}<p>${CAP[k]}</p></div>`;
