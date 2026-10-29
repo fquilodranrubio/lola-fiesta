@@ -11,7 +11,7 @@
 <style>
 :root{color-scheme:dark;
 --bg:#14111c;--sf:#1e1929;--sf2:#2a2338;--line:#3b3250;--tx:#f3eee6;--mu:#aaa2b9;--ac:#e0a93b;--acink:#1b1406;--hot:#e5568a;--hotink:#2a0c18;--ok:#3dbe8b;--bad:#ef6b6b;
---c-hitster:#4a90e8;--c-justone:#2fbf8a;--c-basta:#e8ae1f;--c-resistencia:#e8703a;--c-dibujo:#e87ba4;--c-tesoro:#9a8fee;--c-extras:#5cc46a;--c-disfraz:#e5568a;--c-otro:#d9d4e6;
+--c-hitster:#4a90e8;--c-justone:#2fbf8a;--c-basta:#e8ae1f;--c-dibujo:#e87ba4;--c-tesoro:#9a8fee;--c-extras:#5cc46a;--c-disfraz:#e5568a;--c-otro:#d9d4e6;
 --f-disp:'Limelight',Georgia,serif;--f-body:'Figtree',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--tx)}
@@ -165,7 +165,7 @@ const ICO={lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11
 const ic=n=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[n]}</svg>`;
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 const sstore={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
-const CATS=[['hitster','Hitster'],['justone','Just One'],['basta','Basta'],['resistencia','Resistencia'],['dibujo','Dibujo'],['tesoro','Tesoro'],['extras','Extras'],['disfraz','Disfraz']];
+const CATS=[['hitster','Hitster'],['justone','Just One'],['basta','Basta'],['dibujo','Dibujo'],['tesoro','Tesoro'],['extras','Extras'],['disfraz','Disfraz']];
 const catName=k=>(CATS.find(c=>c[0]===k)||[k,k])[1];
 const catColor=k=>`var(--c-${CATS.some(c=>c[0]===k)?k:'otro'})`;
 const ERR={pin_incorrecto:'El PIN no coincide.',registro_cerrado:'El registro está cerrado. Habla con Fernando.',nombre_invalido:'Escribe un nombre de hasta 24 letras.',pin_invalido:'El PIN son 4 números.',nombre_existe:'Ese nombre ya está registrado. Usa "Ya me registré".',no_existe:'No encontramos ese nombre.',votacion_cerrada:'La votación ya se cerró.',no_puedes_votarte:'No puedes votar por ti.',candidato_invalido:'No puedes votar por esa persona.',no_permitido:'No puedes hacer esto.',admin_pin_incorrecto:'PIN de árbitro incorrecto.',admin_bloqueado:'Demasiados intentos. Espera 10 minutos.',hay_votacion_abierta:'Primero cierra la votación abierta.',sin_descriptor_o_personaje:'No quedan descriptores o personajes disponibles.',confirmacion_incorrecta:'Escribe exactamente EMPEZAR DE NUEVO.'};
@@ -232,7 +232,7 @@ function myMesa(gid){
   const k=cur.kind;
   if(k==='hitster'){const a=D.asg.find(x=>x.block==='hitster'&&x.guest_id===gid);if(!a)return{t:'Hitster Bingo',s:'Aún sin pareja. Fernando la asigna.'};const mates=D.asg.filter(x=>x.block==='hitster'&&x.team===a.team&&x.guest_id!==gid).map(x=>gname(x.guest_id));return{t:'Hitster Bingo',s:`${a.team}${mates.length?' con '+mates.join(' y '):''} · Living`}}
   if(k==='rondaA'||k==='rondaB'){const a=D.asg.find(x=>x.block===k&&x.guest_id===gid);if(!a)return{t:cur.title,s:'Aún sin mesa. Fernando te asigna.'};const n=D.asg.filter(x=>x.block===k&&x.game===a.game).length;return{t:a.game,s:`${a.zone} · ${n} jugadores`}}
-  if(k==='resistencia')return{t:'La Resistencia',s:'Todos juntos en el living'};
+  if(k==='libre')return{t:'Baile libre',s:'Living · último momento para abrir la caja'};
   if(k==='dibujo')return{t:'Dibujo a ciegas',s:'Todos en el living, con papel y lápiz'};
   if(k==='desfile')return{t:'Desfile por la barra',s:'Living'};
   return{t:cur.title,s:cur.place};
@@ -333,10 +333,9 @@ const RULES=[
  ['hitster','Hitster Bingo','En parejas, con música. Primera pareja en completar línea: 5 pts por persona. Segunda: 3. El resto: 1. Se juegan dos partidas.'],
  ['justone','Just One','Cooperativo, 13 cartas. Uno adivina y el resto escribe una pista de una palabra; las pistas repetidas se borran. 11 a 13 aciertos: 4 pts para cada uno. 8 a 10: 3. 5 a 7: 2. Menos de 5: 1.'],
  ['basta','Basta','Sale una categoría. Por turnos, di una palabra que empiece con una letra libre y aprieta esa letra antes de que se acabe el tiempo. Quien no alcanza, sale. Por partida: 3 pts al 1.º, 2 al 2.º, 1 al 3.º.'],
- ['resistencia','La Resistencia','Todos a la vez, con Fernando de narrador. Hay espías escondidos entre la Resistencia; en cada misión se vota quién va y si sale bien o mal. Si son más de 10, algunas parejas comparten personaje. Ganadores +5 por persona, perdedores +1.'],
  ['dibujo','Dibujo a ciegas','Alguien describe un personaje secreto (lo ve solo en su celular) sin decir quién es. El resto dibuja siguiendo las instrucciones. Al final se vota en la app el más parecido: 3, 2 y 1 pts. Quien describe suma 2.'],
  ['disfraz','Desfile y mejor disfraz','Pasa con tu disfraz por la barra. Al final, votación secreta en la app: 5, 3 y 1 pts. El resultado se revela antes del marcador final. No puedes votarte.'],
- ['tesoro','El Gran Robo','Busca los carteles QR por la casa y escanéalos con la cámara. Primero en encontrar un cartel: +1. Relámpago (solo activo un rato): +2. Hay trampas que restan 2. La caja se abre desde las 23:30, con al menos 4 pistas encontradas; un intento fallido te bloquea 15 minutos. Abrirla: +6. Lola no puede abrir la caja.'],
+ ['tesoro','El Gran Robo','Busca los carteles QR por la casa y escanéalos con la cámara. Primero en encontrar un cartel: +1. Relámpago (solo activo un rato): +2. Hay trampas que restan 2. La caja se abre desde el cumpleaños (22:50), con al menos 4 pistas encontradas; un intento fallido te bloquea 15 minutos. Abrirla: +6. Lola no puede abrir la caja.'],
  ['extras','Puntos extra','Los da Fernando: mejor actuación del disfraz +2, espíritu deportivo +2 y comodín de Lola +3.']];
 function guestJuegos(){
   return `<div class="card"><h3>Reglas y puntos</h3>${RULES.map(r=>`<details><summary><i class="dot" style="background:${catColor(r[0])}"></i>${r[1]}</summary><p>${r[2]}</p></details>`).join('')}</div><div class="card"><h3>Con quién hablar</h3><p class="mu">Fernando es el árbitro. Él anota los puntos de las mesas y resuelve dudas.</p></div>`;
@@ -418,7 +417,6 @@ function adminPuntos(){
   <div class="card"><h3>Resultado Just One</h3><div class="fld"><label for="jo-b">Ronda</label><select id="jo-b"><option value="rondaA">Ronda A</option><option value="rondaB">Ronda B</option></select></div><div class="fld"><label for="jo-n">Aciertos (de 13)</label><input type="number" id="jo-n" min="0" max="13" value="9"></div><button class="btn" data-act="resJO">Anotar a toda la mesa</button></div>
   <div class="card"><h3>Resultado Basta (por partida)</h3><div class="fld"><label for="ba-b">Ronda</label><select id="ba-b" data-ch="baRound"><option value="rondaA" ${F.ba!=='rondaB'?'selected':''}>Ronda A</option><option value="rondaB" ${F.ba==='rondaB'?'selected':''}>Ronda B</option></select></div>
   ${(()=>{const ids=groupOf(F.ba||'rondaA','Basta');const opts=`<option value="">—</option>`+ids.map(id=>`<option value="${id}">${esc(gname(id))}</option>`).join('');return ids.length?`<div class="grp" style="grid-template-columns:repeat(3,1fr)"><div class="fld"><label for="b1">1.º (3)</label><select id="b1">${opts}</select></div><div class="fld"><label for="b2">2.º (2)</label><select id="b2">${opts}</select></div><div class="fld"><label for="b3">3.º (1)</label><select id="b3">${opts}</select></div></div><button class="btn" data-act="resBasta">Anotar partida</button>`:'<p class="mu">Primero sortea los grupos.</p>'})()}</div>
-  <div class="card"><h3>Resultado Resistencia</h3><p class="mu" style="font-size:13px">Marca a los ganadores. Los demás jugadores activos suman 1.</p>${gChips(F.res||new Set(),'resG',pl)}<button class="btn" data-act="resRes" ${(F.res&&F.res.size)?'':'disabled'}>Ganadores +5, resto +1</button></div>
   <div class="card"><h3>Últimas anotaciones</h3><div class="tbl">${ALOG.slice(0,25).map(l=>`<div class="tr"><div>${esc(gname(l.guest_id))} <b class="mono" style="color:${catColor(l.cat)}">${l.pts>0?'+':''}${l.pts}</b>${l.hidden?' <span class="badge hot">oculto</span>':''}<small>${catName(l.cat)} · ${esc(l.note)} · ${hm(l.created_at)}</small></div><button class="x" data-act="ptDel" data-v="${l.id}">Anular</button></div>`).join('')||'<p class="mu">Sin anotaciones.</p>'}</div></div>`;
 }
 function adminGrupos(){
@@ -457,7 +455,7 @@ function adminTesoro(){
   <p class="mu" style="font-size:12px">Al activar un relámpago, la TV y los celulares muestran la alerta. Di <span class="kbd">"Alexa, alerta"</span>.</p></div>
   <div class="card"><h3>La caja</h3><p>${st.caja_winner?`Abierta por <b>${esc(gname(st.caja_winner))}</b> a las ${hm(st.caja_opened_at)}.`:`Cerrada. Se abre desde las ${hm(st.caja_from)}.`}</p>
   <div class="fld"><label for="prize">Dónde está escondido el premio (lo ve quien abre la caja)</label><input type="text" id="prize" maxlength="120" placeholder="${ASECRETS?esc(ASECRETS.prize_location):'Por ejemplo: dentro del microondas'}"></div><button class="btn ghost sm" data-act="prizeSave">Guardar lugar</button>
-  <div class="row"><button class="btn ghost sm" data-act="cajaNow">Permitir abrir la caja ahora</button><button class="btn ghost sm" data-act="cajaFri">Volver a las 23:30 del viernes</button></div></div>
+  <div class="row"><button class="btn ghost sm" data-act="cajaNow">Permitir abrir la caja ahora</button><button class="btn ghost sm" data-act="cajaFri">Volver a las 22:50 del viernes</button></div></div>
   <div class="card"><h3>Imprimir carteles</h3><p class="mu" style="font-size:13px">Abre una página con los 13 carteles listos para imprimir.</p><button class="btn ghost" data-act="printQR">Ver carteles para imprimir</button></div>`;
 }
 function adminSistema(){
@@ -610,8 +608,6 @@ const ACT={
  async resJO(){const b=$('#jo-b').value,n=+$('#jo-n').value;const ids=groupOf(b,'Just One');if(!ids.length)return toast('Ese grupo no tiene jugadores',true);const p=n>=11?4:n>=8?3:n>=5?2:1;await A('admin_points',{p_gids:ids,p_cat:'justone',p_pts:p,p_note:n+' aciertos'},`+${p} para ${ids.length} personas`)},
  async resBasta(){const v=[$('#b1').value,$('#b2').value,$('#b3').value];if(!v[0])return toast('Elige al menos el 1.º',true);if(new Set(v.filter(Boolean)).size!==v.filter(Boolean).length)return toast('No repitas personas',true);
   const pts=[3,2,1];for(let i=0;i<3;i++)if(v[i])await A('admin_points',{p_gids:[v[i]],p_cat:'basta',p_pts:pts[i],p_note:(i+1)+'.º en Basta'});toast('Partida anotada')},
- resG(d){AFORM.res=AFORM.res||new Set();AFORM.res.has(d.v)?AFORM.res.delete(d.v):AFORM.res.add(d.v);render()},
- async resRes(){const w=[...AFORM.res];const l=players().map(g=>g.id).filter(id=>!AFORM.res.has(id));await A('admin_points',{p_gids:w,p_cat:'resistencia',p_pts:5,p_note:'Ganó La Resistencia'});if(l.length)await A('admin_points',{p_gids:l,p_cat:'resistencia',p_pts:1,p_note:'Jugó La Resistencia'},'Resistencia anotada');AFORM.res=new Set();render()},
  drawHit(){const p=shuffle(players().map(g=>g.id));const t=[];for(let i=0;i<p.length;i+=2)t.push(p.slice(i,i+2));if(t.length>1&&t[t.length-1].length===1)t[t.length-2].push(t.pop()[0]);saveHit(t)},
  hitLate(){const teams={};D.asg.filter(a=>a.block==='hitster').forEach(a=>(teams[a.team]=teams[a.team]||[]).push(a.guest_id));const arr=Object.keys(teams).sort((a,b)=>+a.split(' ')[1]-+b.split(' ')[1]).map(k=>teams[k]);const asg=new Set(arr.flat());players().filter(g=>!asg.has(g.id)).forEach(g=>{arr.sort((a,b)=>a.length-b.length)[0].push(g.id)});saveHit(arr)},
  drawGrp(){const pl=players();const sm=shuffle(pl.filter(g=>g.smoker).map(g=>g.id));const ns=shuffle(pl.filter(g=>!g.smoker).map(g=>g.id));const n1=Math.floor(pl.length/2);const g1=sm.slice(0,n1);const rest=[...sm.slice(n1),...ns];while(g1.length<n1)g1.push(rest.shift());saveGroups(g1,rest)},
@@ -631,7 +627,7 @@ const ACT={
  qOff(d){A('admin_qr_off',{p_qr:+d.v},'Relámpago apagado')},
  async prizeSave(){const v=$('#prize').value.trim();if(!v)return;ASECRETS=await A('admin_secrets',{p_data:{prize_location:v}},'Lugar guardado')},
  cajaNow(){A('admin_state',{p_data:{caja_from:new Date().toISOString()}},'La caja ya se puede abrir')},
- cajaFri(){A('admin_state',{p_data:{caja_from:'2026-10-30T23:30:00-03:00'}},'Caja desde las 23:30 del viernes')},
+ cajaFri(){A('admin_state',{p_data:{caja_from:'2026-10-30T22:50:00-03:00'}},'Caja desde las 22:50 del viernes')},
  printQR(){printPage()},
  async reset(){const c=$('#rs-c').value.trim();await A('admin_reset_all',{p_confirm:c},'Listo: todo desde cero');ALOG=[]},
  async newPin(){const p=$('#np').value.trim();if(p.length<4)return toast('Mínimo 4 números',true);await A('admin_secrets',{p_data:{new_admin_pin:p}},'PIN cambiado');APIN=p;sstore.set('apin',p)},
