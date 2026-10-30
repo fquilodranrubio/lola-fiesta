@@ -637,7 +637,7 @@ function tvDetect(){
   if(st.votes_revealed&&!p.vr){TVOV={type:'disfraz',until:Date.now()+20000};setTimeout(confetti,400)}
   if(st.final_revealed&&!p.fr)startFinal();
 }
-const LC=['#ff3ea5','#35e08c','#ffd166','#4cc9f0','#b388ff','#ff8a3d','#f0fff6','#ff6b6b','#2ec4b6','#c8e64c','#f78fb3','#8ecae6'];
+const LC=['#ff3ea5','#35e08c','#ffd166','#4cc9f0','#b388ff','#ff8a3d','#f0fff6','#ff6b6b','#2ec4b6','#c8e64c','#f78fb3','#8ecae6','#e07be0','#ffe66d','#6fffe9','#ffa07a'];
 function chartData(){
   const P=ranking().map(x=>x.g);const n=P.length;if(n<2)return null;
   const ids=new Set(P.map(g=>g.id));
