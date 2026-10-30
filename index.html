@@ -399,7 +399,7 @@ const RULES=()=>[
  ['basta','✋ Basta','Todos los anotados juegan en una sola mesa, en la terraza. Sale una categoría (por ejemplo, comidas). Por turnos, cada persona dice una palabra que empiece con una letra todavía libre y aprieta esa letra. Quien no alcanza a decirla antes de que se acabe el tiempo queda fuera. Fernando explica la ruleta al empezar.','Se juegan varias partidas. En cada una: 1.º gana 3 pts, 2.º gana 2 pts y 3.º gana 1 pt. Tus puntos de todas las partidas se suman.'],
  ['dibujo','🎨 Dibujo a ciegas','Dani recibe en su celular un personaje secreto y lo describe sin decir su nombre. Los anotados dibujan solo con esa descripción. Al acabar el tiempo, cada uno escribe al lado de su dibujo qué personaje cree que es. Después se revela el personaje y se vota en la app el dibujo más parecido. Se juegan 1 o 2 rondas.','Quien acierta el nombre del personaje: +3 pts. Dibujo más votado: +5 pts. Dani suma +2 si describe 1 personaje y +3 en total si describe 2. No puedes votar por ti.'],
  ['disfraz','👗 Desfile y mejor disfraz','Todos pasan con su disfraz por la barra del living. Pasar no da puntos. Después votas en secreto en la app por el mejor disfraz, y no puedes votarte. El resultado queda oculto hasta la revelación final.','1.º gana 5 pts, 2.º gana 3 pts y 3.º gana 1 pt.'],
- ['tesoro','🗝️ Encuentra el Tesoro','Hay carteles QR escondidos por toda la casa, y uno lo lleva Román. Escanéalos con la cámara del celular: cada uno guarda una pista del código secreto de 6 números. Compartir pistas está permitido. Algunas pistas son falsas, hay carteles trampa y retos. Los carteles relámpago funcionan solo un rato: te avisa una alerta en el celular y en la TV. Con las pistas armas el código y lo pruebas en la caja, en la pestaña Tesoro. Si nadie la abre antes de la revelación, hay un sorteo: cada uno prueba el código en su celular mientras todos miran la pantalla.','Primero en encontrar un cartel: +1 pt (relámpago: +2). Trampa: −2 pts. La caja se puede probar desde las '+hm(D.state.caja_from)+' hasta la revelación, con al menos 4 pistas encontradas. Abrirla da +6 pts. Si te equivocas, quedas bloqueado 15 minutos. El marcador se congela cuando empieza el desfile y se actualiza cuando alguien abre el cofre.'],
+ ['tesoro','🗝️ Encuentra el Tesoro','Hay carteles QR escondidos por toda la casa. Escanéalos con la cámara del celular: cada uno guarda una pista del código secreto de 6 números. Compartir pistas está permitido. Algunas pistas son falsas, hay carteles trampa y retos. Los carteles relámpago funcionan solo un rato: te avisa una alerta en el celular y en la TV. Con las pistas armas el código y lo pruebas en la caja, en la pestaña Tesoro. Si nadie la abre antes de la revelación, hay un sorteo: cada uno prueba el código en su celular mientras todos miran la pantalla.','Primero en encontrar un cartel: +1 pt (relámpago: +2 o más). Trampa: −2 pts. La caja se puede probar desde las '+hm(D.state.caja_from)+' hasta la revelación, con al menos 4 pistas encontradas. Abrirla da +6 pts. Si te equivocas, quedas bloqueado 15 minutos. El marcador se congela cuando empieza el desfile y se actualiza cuando alguien abre el cofre.'],
  ['extras','⭐ Puntos extra','Fernando los da cuando alguien se luce o juega limpio durante la noche.','Mejor actuación del disfraz: +2 pts. Espíritu deportivo: +2 pts. Comodín de Lola: +3 pts.']];
 function guestJuegos(){
   return `<div class="card"><h3>📖 Reglas y puntos</h3><p class="mu" style="font-size:13px">Para cada juego eliges desde Inicio si juegas o no.</p>${RULES().map(r=>`<details><summary><i class="dot" style="background:${catColor(r[0])}"></i>${r[1]}</summary><p><b>Cómo se juega:</b> ${r[2]}</p><p><b>Puntos:</b> ${r[3]}</p></details>`).join('')}</div><div class="card"><h3>🙋 Con quién hablar</h3><p class="mu">Fernando es el árbitro. Él anota los puntos de las mesas y resuelve dudas.</p></div>`;
@@ -561,7 +561,7 @@ function tvHTML(){
     const order=st.tf_order||[];const cu=order[st.tf_idx];
     left=`<h2>🎲 Sorteo del cofre</h2><div style="display:grid;align-content:center;justify-items:center;text-align:center;flex:1;gap:12px"><div class="ill tvchest">${CHEST}</div><div style="font-size:26px" class="mu">Le toca probar el código a</div><div class="tvbig">${esc(gname(cu))}</div><div class="mu" style="font-size:18px">Orden: ${order.map((id,i)=>i===st.tf_idx?`<b style="color:var(--ac)">${esc(gname(id))}</b>`:esc(gname(id))).join(' · ')}</div></div>`;
   }else if(TVANIM&&TVANIM.type==='final'){
-    const A=TVANIM;left=`<h2>Marcador final</h2>${A.cd>0?`<div style="display:grid;place-items:center;flex:1"><span style="font:500 180px var(--f-mono);color:var(--hot)">${A.cd}</span></div>`:`<div style="--rh:${rh}px">${rk.map((x,i)=>`<div class="${i>=N-A.n?'pop':'hid'}">${board([x],null,mxOf(rk),true)}</div>`).join('')}</div>`}`;
+    const A=TVANIM;left=A.ph==='chart'?`<h2>Así se movió la noche 📈</h2><div style="flex:1;min-height:0">${chartSVG(A.CD,A.k)}</div><p class="mu" style="font-size:18px;text-align:center">${A.k>=A.CD.K?'Con los votos del disfraz, este es el final…':'Posición de cada invitado a lo largo de la noche'}</p>`:`<h2>Marcador final</h2>${A.cd>0?`<div style="display:grid;place-items:center;flex:1"><span style="font:500 180px var(--f-mono);color:var(--hot)">${A.cd}</span></div>`:`<div style="--rh:${rh}px">${rk.map((x,i)=>`<div class="${i>=N-A.n?'pop':'hid'}">${board([x],null,mxOf(rk),true)}</div>`).join('')}</div>`}`;
   }else if(sealed()){
     left=`<h2>Marcador sellado</h2><div style="--rh:${rh}px">${rk.slice().sort((a,b)=>a.g.name.localeCompare(b.g.name)).map(x=>`<div class="brow"><span class="rk">·</span><span class="bn">${esc(x.g.name)}<small>${esc(x.g.costume)}</small></span><span class="bbar seal"></span><b class="bt">?</b></div>`).join('')}</div><p class="mu" style="font-size:20px">${ic('lock')} Sumando los votos del disfraz…</p>`;
   }else if(!N){
@@ -637,11 +637,48 @@ function tvDetect(){
   if(st.votes_revealed&&!p.vr){TVOV={type:'disfraz',until:Date.now()+20000};setTimeout(confetti,400)}
   if(st.final_revealed&&!p.fr)startFinal();
 }
+const LC=['#ff3ea5','#35e08c','#ffd166','#4cc9f0','#b388ff','#ff8a3d','#f0fff6','#ff6b6b','#2ec4b6','#c8e64c','#f78fb3','#8ecae6'];
+function chartData(){
+  const P=ranking().map(x=>x.g);const n=P.length;if(n<2)return null;
+  const ids=new Set(P.map(g=>g.id));
+  const L=D.log.filter(l=>ids.has(l.guest_id)).map(l=>({id:l.guest_id,p:l.pts,t:l.cat==='disfraz'?Infinity:+new Date(l.created_at)}));
+  const fin=L.filter(l=>isFinite(l.t)).map(l=>l.t);if(!fin.length)return null;
+  const t0=+evStart(),t1=Math.max(...fin,t0+3600000),K=36;const pos=[];
+  for(let i=0;i<=K;i++){
+    const T=i===K?Infinity:t0+(t1-t0)*i/(K-1),tot={};P.forEach(g=>tot[g.id]=0);
+    L.forEach(l=>{if(l.t<=T)tot[l.id]+=l.p});
+    const ord=P.slice().sort((a,b)=>tot[b.id]-tot[a.id]||a.name.localeCompare(b.name));
+    const m={};ord.forEach((g,r)=>m[g.id]=r+1);pos.push(m);
+  }
+  return {P,n,K,pos,t0,t1};
+}
+function chartSVG(CD,k){
+  const W=800,H=500,pl=30,pr=130,pt=18,pb=34,n=CD.n,K=CD.K;
+  const X=i=>pl+(W-pl-pr)*i/K,Y=p=>pt+(H-pt-pb)*(p-1)/(n-1);
+  const win=CD.P.find(g=>CD.pos[K][g.id]===1);let o='';
+  for(let r=1;r<=n;r++)o+=`<text x="${pl-10}" y="${Y(r)+5}" fill="#9fd1b6" font-size="14" text-anchor="end" font-family="IBM Plex Mono,monospace">${r}</text><line x1="${pl}" x2="${W-pr}" y1="${Y(r)}" y2="${Y(r)}" stroke="#2a6a4a" stroke-opacity=".25"/>`;
+  for(let i=0;i<=K-4;i+=7){o+=`<text x="${X(i)}" y="${H-10}" fill="#9fd1b6" font-size="13" text-anchor="middle" font-family="IBM Plex Mono,monospace">${hm(new Date(CD.t0+(CD.t1-CD.t0)*i/(K-1)))}</text>`}
+  o+=`<text x="${X(K)}" y="${H-10}" fill="#9fd1b6" font-size="13" text-anchor="middle" font-family="IBM Plex Mono,monospace">Final</text>`;
+  const done=k>=K;
+  CD.P.forEach((g,gi)=>{
+    const col=LC[gi%LC.length],isW=done&&g.id===win.id,dim=done&&!isW;
+    let pts='';for(let i=0;i<=k;i++)pts+=`${X(i).toFixed(1)},${Y(CD.pos[i][g.id]).toFixed(1)} `;
+    const ex=X(k),ey=Y(CD.pos[k][g.id]);
+    o+=`<g opacity="${dim?.3:1}"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="${isW?8:4}" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${ex}" cy="${ey}" r="${isW?9:6}" fill="${col}"/><text x="${ex+14}" y="${ey+6}" fill="${col}" font-size="${isW?20:16}" font-weight="${isW?800:600}" font-family="Figtree,sans-serif">${esc(g.name)}${isW?' 👑':''}</text></g>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:100%" role="img" aria-label="Posición de cada invitado durante la noche">${o}</svg>`;
+}
 function startFinal(){
-  const N=ranking().length;TVOV=null;TVANIM={type:'final',cd:3,n:0};renderTV();
-  const step=()=>{if(!TVANIM)return;if(TVANIM.cd>0)TVANIM.cd--;else if(TVANIM.n<N)TVANIM.n++;else{TVANIM=null;renderTV();return}
+  const N=ranking().length;TVOV=null;const CD=chartData();
+  TVANIM={type:'final',ph:CD?'chart':'count',k:0,cd:3,n:0,CD};renderTV();
+  const step=()=>{if(!TVANIM)return;
+   if(TVANIM.ph==='chart'){
+     if(TVANIM.k<CD.K){TVANIM.k++;renderTV();setTimeout(step,TVANIM.k===CD.K?3500:320)}
+     else{TVANIM.ph='count';TVANIM.cd=3;renderTV();setTimeout(step,1000)}
+     return}
+   if(TVANIM.cd>0)TVANIM.cd--;else if(TVANIM.n<N)TVANIM.n++;else{TVANIM=null;renderTV();return}
    renderTV();if(TVANIM.cd===0&&TVANIM.n===N)confetti();setTimeout(step,TVANIM.cd>0?1000:(TVANIM.n===N?3500:(TVANIM.n>=N-3?1600:900)))};
-  setTimeout(step,1000);
+  setTimeout(step,CD?600:1000);
 }
 function confetti(){
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
