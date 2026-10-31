@@ -37,6 +37,8 @@ h1,h2,h3,p{margin:0}
 .tabs{display:flex;gap:2px;background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:3px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;overflow-x:auto}
 .tabs button{flex:1;background:none;border:0;padding:9px 8px;border-radius:9px;color:var(--mu);cursor:pointer;font-weight:500;font-size:13px;white-space:nowrap}
 .tabs button.on{background:var(--ac);color:var(--acink)}
+.ph{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.phb{padding:0;border:0;background:var(--sf2);border-radius:8px;overflow:hidden;aspect-ratio:1;cursor:pointer}.phb img{width:100%;height:100%;object-fit:cover;display:block}
+.lbx{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:60;display:grid;place-items:center;padding:12px}.lbi{display:grid;gap:10px;max-width:520px;width:100%;justify-items:center}.lbi img{max-width:100%;max-height:68vh;border-radius:10px}.lbi p{color:var(--tx);margin:0}.lbi a{text-decoration:none}
 .card{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:10px;min-width:0}
 .card.hl{border-color:var(--ac)}
 .card h3{font:500 12px var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--mu)}
@@ -236,15 +238,15 @@ if(params.has('qr')){try{history.replaceState(null,'',location.pathname+(VIEW!==
 const D={state:null,guests:[],agenda:[],asg:[],log:[],rounds:[],qrs:[],finds:[],att:[],su:[],loaded:false};
 async function load(){
   const q=t=>sb.from(t).select('*');
-  const [st,gu,ag,as,lg,vr,qr,fi,at,su]=await Promise.all([q('state').eq('id',1).single(),q('guests'),q('agenda').order('ord'),q('assignments').eq('active',true),q('score_log').eq('void',false).order('id'),q('vote_rounds').order('id'),q('qr_codes').order('num'),q('qr_finds'),q('caja_attempts'),q('signups')]);
-  for(const r of [st,gu,ag,as,lg,vr,qr,fi,at,su])if(r.error)throw r.error;
+  const [st,gu,ag,as,lg,vr,qr,fi,at,su,fo]=await Promise.all([q('state').eq('id',1).single(),q('guests'),q('agenda').order('ord'),q('assignments').eq('active',true),q('score_log').eq('void',false).order('id'),q('vote_rounds').order('id'),q('qr_codes').order('num'),q('qr_finds'),q('caja_attempts'),q('signups'),q('fotos').order('id',{ascending:false})]);
+  for(const r of [st,gu,ag,as,lg,vr,qr,fi,at,su,fo])if(r.error)throw r.error;
   D.state=st.data;
   D.guests=gu.data.filter(g=>g.run===D.state.run&&!g.removed).sort((a,b)=>a.name.localeCompare(b.name));
   const ids=new Set(D.guests.map(g=>g.id));
   D.agenda=ag.data.filter(a=>!a.removed);D.asg=as.data.filter(a=>ids.has(a.guest_id));D.log=lg.data.filter(l=>ids.has(l.guest_id));
   const rs=+new Date(D.state.run_started_at||0);
   D.rounds=vr.data.filter(r=>+new Date(r.created_at)>=rs);
-  D.qrs=qr.data;D.finds=fi.data.filter(f=>ids.has(f.guest_id));D.att=at.data.filter(a=>ids.has(a.guest_id));D.su=su.data.filter(a=>ids.has(a.guest_id));
+  D.qrs=qr.data;D.finds=fi.data.filter(f=>ids.has(f.guest_id));D.att=at.data.filter(a=>ids.has(a.guest_id));D.su=su.data.filter(a=>ids.has(a.guest_id));D.fotos=(fo.data||[]).filter(x=>!x.removed&&ids.has(x.guest_id));
   D.loaded=true;
 }
 let rT=null;
@@ -252,7 +254,7 @@ function schedule(){clearTimeout(rT);rT=setTimeout(refresh,250)}
 async function refresh(){try{await load();await afterLoad();render()}catch(e){console.error(e);if(!D.loaded)$('#root').innerHTML=`<div class="app"><div class="card"><h2>Sin conexión</h2><p class="mu">No pudimos cargar la fiesta. Revisa tu internet y recarga la página.</p></div></div>`}}
 function subscribe(){
   const ch=sb.channel('fiesta');
-  ['state','guests','agenda','assignments','score_log','vote_rounds','qr_codes','qr_finds','caja_attempts','signups'].forEach(t=>ch.on('postgres_changes',{event:'*',schema:'public',table:t},schedule));
+  ['state','guests','agenda','assignments','score_log','vote_rounds','qr_codes','qr_finds','caja_attempts','signups','fotos'].forEach(t=>ch.on('postgres_changes',{event:'*',schema:'public',table:t},schedule));
   ch.subscribe();
   setInterval(refresh,20000);
   setInterval(()=>tick(),1000);
@@ -433,12 +435,44 @@ function guestTesoro(g){
   h+=`<div class="card"><h3>Cómo escanear</h3><p class="mu">Abre la cámara del celular, apunta al cartel y toca el enlace que aparece. La pista queda guardada aquí.</p></div>`;
   return h;
 }
+
+/* ---------- Fotos ---------- */
+let FUP=null;let LB=null;
+const fotoUrl=p=>sb.storage.from('fotos').getPublicUrl(p).data.publicUrl;
+function guestFotos(g){
+  const fl=D.fotos||[];const mine=fl.filter(x=>x.guest_id===g.id).length;
+  const up=FUP?`<p class="mu" style="font-size:13px">Subiendo ${FUP.done} de ${FUP.total}…</p>`:'';
+  let h=`<div class="card hl"><h3>📸 Fotos de la fiesta</h3><p class="mu" style="font-size:13px">Sube tus fotos y mira las de los demás. Toca una foto para verla grande y descargarla.</p><button class="btn ${FUP?'ghost':''}" data-act="fotoPick" ${FUP?'disabled':''}>${FUP?'Subiendo…':'➕ Subir fotos'}</button>${up}<p class="mu" style="font-size:12px">Tus fotos: ${mine} de 60 · Las fotos se achican automáticamente.</p></div>`;
+  h+=fl.length?`<div class="ph">${fl.map(x=>`<button class="phb" data-act="fotoOpen" data-v="${x.id}" aria-label="Foto de ${esc(gname(x.guest_id))}"><img loading="lazy" src="${fotoUrl(x.path)}" alt="Foto de ${esc(gname(x.guest_id))}"></button>`).join('')}</div>`:`<div class="card"><p class="mu">Aún no hay fotos. ¡Sube la primera!</p></div>`;
+  const o=LB&&fl.find(x=>x.id===LB);
+  if(o){const own=o.guest_id===g.id;h+=`<div class="lbx" role="dialog" aria-label="Foto"><div class="lbi"><img src="${fotoUrl(o.path)}" alt="Foto de ${esc(gname(o.guest_id))}"><p>${esc(gname(o.guest_id))} · ${hm(o.created_at)}</p><div class="row"><a class="btn sm" href="${fotoUrl(o.path)}" download target="_blank" rel="noopener">⬇️ Descargar</a>${own?`<button class="btn ghost sm" data-act="fotoDel" data-v="${o.id}">Quitar</button>`:''}${typeof APIN!=='undefined'&&APIN&&!own?`<button class="btn ghost sm" data-act="fotoDelAdm" data-v="${o.id}">Quitar (árbitro)</button>`:''}<button class="btn ghost sm" data-act="fotoClose">Cerrar</button></div></div></div>`}
+  return h;
+}
+async function resizeJpg(file){
+  let bmp;try{bmp=await createImageBitmap(file,{imageOrientation:'from-image'})}catch(e){bmp=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=URL.createObjectURL(file)})}
+  const w0=bmp.width||bmp.naturalWidth,h0=bmp.height||bmp.naturalHeight,k=Math.min(1,1600/Math.max(w0,h0));
+  const cv=document.createElement('canvas');cv.width=Math.round(w0*k);cv.height=Math.round(h0*k);cv.getContext('2d').drawImage(bmp,0,0,cv.width,cv.height);
+  for(const q of [.82,.7,.55,.4]){const b=await new Promise(r=>cv.toBlob(r,'image/jpeg',q));if(b&&b.size<=1500000)return b}
+  throw new Error('grande')
+}
+async function uploadFotos(files){
+  if(!ME||!files.length||FUP)return;const list=[...files].slice(0,20);FUP={done:0,total:list.length};render();let fail=0;
+  for(let i=0;i<list.length;i++){
+    try{
+      const blob=await resizeJpg(list[i]);const path=ME.gid+'/'+Date.now().toString(36)+i+'.jpg';
+      const {error}=await sb.storage.from('fotos').upload(path,blob,{contentType:'image/jpeg',upsert:false});if(error)throw error;
+      await rpc('foto_add',{p_gid:ME.gid,p_pin:ME.pin,p_path:path});
+    }catch(e){fail++;console.error(e);if(String((e&&e.message)||'').includes('limite_fotos')){toast('Llegaste al máximo de 60 fotos',true);break}}
+    FUP.done=i+1;render();
+  }
+  FUP=null;await refresh();toast(fail?`Listo. ${fail} no se pudieron subir`:'¡Fotos subidas!',!!fail);
+}
 function renderGuest(){
   const root=$('#root');
   if(!ME){root.innerHTML=authView();return}
   const g=D.guests.find(x=>x.id===ME.gid);if(!g){root.innerHTML=authView();return}
-  const T=[['inicio','🏠 Inicio'],['programa','📅 Programa'],['juegos','📖 Reglas'],['marcador','🏆 Marcador'],['tesoro','🗝️ Tesoro']];
-  const body={inicio:guestInicio,programa:guestPrograma,juegos:guestJuegos,marcador:guestMarcador,tesoro:guestTesoro}[TAB](g);
+  const T=[['inicio','🏠 Inicio'],['programa','📅 Programa'],['juegos','📖 Reglas'],['marcador','🏆 Marcador'],['tesoro','🗝️ Tesoro'],['fotos','📸 Fotos']];
+  const body={inicio:guestInicio,programa:guestPrograma,juegos:guestJuegos,marcador:guestMarcador,tesoro:guestTesoro,fotos:guestFotos}[TAB](g);
   root.innerHTML=`<div class="app"><header class="top"><div class="brand"><span class="lg">${illus("chi")}</span>Niver de Lola<small>Fiesta de cumpleaños 🎂</small></div><div class="who"><div><b>${esc(g.name)}</b><small>${esc(g.costume)}</small></div><div class="av">${esc(g.name[0]||'?')}</div></div></header>
   <nav class="tabs" aria-label="Secciones">${T.map(t=>`<button class="${TAB===t[0]?'on':''}" data-act="tab" data-v="${t[0]}"><span class="te">${t[1].split(' ')[0]}</span>${t[1].split(' ')[1]}</button>`).join('')}</nav>${body}
   <p class="note" style="text-align:center">Con cariño de Santos a Santiago 🇧🇷💛 · Román 🐶 supervisa desde algún rincón</p><p class="note">${esc(g.name)} · <button class="x" data-act="logout">Salir de este celular</button></p></div>`;
@@ -701,6 +735,11 @@ function printPage(){
 /* ---------- Acciones ---------- */
 const ACT={
  tab(d){if(d.v===TAB)return;transition(()=>{TAB=d.v;if(d.v!=='tesoro'&&d.v!=='inicio')SCANRES=null;render();scrollTo(0,0)})},
+ fotoPick(){let i=document.getElementById('fotoIn');if(!i){i=document.createElement('input');i.type='file';i.id='fotoIn';i.accept='image/*';i.multiple=true;i.hidden=true;document.body.appendChild(i)}i.value='';i.click()},
+ fotoOpen(d){LB=+d.v;render()},
+ fotoClose(){LB=null;render()},
+ async fotoDel(d){try{await rpc('foto_remove',{p_gid:ME.gid,p_pin:ME.pin,p_id:+d.v});LB=null;await refresh();toast('Foto quitada')}catch(e){toast(errMsg(e),true)}},
+ async fotoDelAdm(d){try{await rpc('admin_foto_remove',{p_admin:APIN,p_id:+d.v});LB=null;await refresh();toast('Foto quitada')}catch(e){toast(errMsg(e),true)}},
  authMode(d){AUTH=d.v;AUTHERR='';render()},
  closeScan(){SCANRES=null;render()},
  async register(){
@@ -782,14 +821,14 @@ async resHit(){const a=$('#h1').value,b=$('#h2').value;if(!a)return;if(a===b)ret
 function openModal(h){const m=$('#modal');m.innerHTML=h;m.hidden=false}
 function closeModal(){$('#modal').hidden=true}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const f=ACT[b.dataset.act];if(f){e.preventDefault();Promise.resolve(f(b.dataset)).catch(()=>{})}});
-document.addEventListener('change',e=>{if(e.target.dataset.ch==='baRound'){AFORM.ba=e.target.value;render()}});
+document.addEventListener('change',e=>{if(e.target.id==='fotoIn'){uploadFotos(e.target.files);return}if(e.target.dataset.ch==='baRound'){AFORM.ba=e.target.value;render()}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input')){const c=e.target.closest('.card');const b=c&&c.querySelector('.btn[data-act]');if(b&&!b.disabled)b.click()}});
 
 /* ---------- Ciclo ---------- */
 function render(){
   if(!D.loaded)return;
   const fe=document.activeElement;const fid=fe&&fe.id;const fv=fe&&fe.value;const keep={};
-  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(i=>{if(i.type!=='checkbox')keep[i.id]=i.value;else keep[i.id]=i.checked});
+  document.querySelectorAll('input[id]:not([type=file]),select[id],textarea[id]').forEach(i=>{if(i.type!=='checkbox')keep[i.id]=i.value;else keep[i.id]=i.checked});
   if(VIEW==='tv'){tvDetect();renderTV();return}
   if(VIEW==='admin')renderAdmin();else renderGuest();
   Object.entries(keep).forEach(([k,v])=>{const i=document.getElementById(k);if(!i)return;if(i.type==='checkbox')i.checked=v;else if(v!==''&&v!=null)i.value=v});
